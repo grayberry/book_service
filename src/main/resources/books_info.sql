@@ -1,11 +1,14 @@
+CREATE DATABASE book_service;
+USE book_service;
+
 CREATE TABLE if not exists categories(
-                         id SERIAL primary key ,
-                         category VARCHAR(255) unique not null
+                   id SERIAL primary key ,
+                   category VARCHAR(255) unique not null
 );
 
 CREATE TABLE if not exists authors(
-                      id SERIAL primary key ,
-                      full_name VARCHAR(255) unique not null
+                    id SERIAL primary key ,
+                    full_name VARCHAR(255) unique not null
 );
 
 CREATE TABLE books(
@@ -20,8 +23,9 @@ CREATE TABLE books(
 );
 
 create table book_authors (
-  book_id integer references books(id) on update cascade on delete cascade,
-  author_id integer references authors(id) on update cascade on delete cascade
+                    book_id integer references books(id) on update cascade on delete cascade,
+                    author_id integer references authors(id) on update cascade on delete cascade,
+                    PRIMARY KEY (book_id, author_id)
 );
 
 create table book_categories (

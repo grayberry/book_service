@@ -1,16 +1,53 @@
 package am.dreamteam.bookservice.entities.books;
 
+import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "language")
     private String language;
+    @Column(name = "page_count")
     private int pageCount;
+    @Column(name = "image_ref")
     private String imageRef;
-    private String text;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "isbn_10")
     private String isbn10;
+    @Column(name = "isbn_13")
     private String isbn13;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name ="author_id"))
+    private Set<Author> authors;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name ="category_id"))
+    private Set<Category> categories;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<UsersAddBooks> usersAddBooks;
+
     public Book() {
+    }
+
+    public Book(String title, String language, int pageCount, String imageRef, String description, String isbn10, String isbn13) {
+        this.title = title;
+        this.language = language;
+        this.pageCount = pageCount;
+        this.imageRef = imageRef;
+        this.description = description;
+        this.isbn10 = isbn10;
+        this.isbn13 = isbn13;
     }
 
     public int getId() {
@@ -53,12 +90,12 @@ public class Book {
         this.imageRef = imageRef;
     }
 
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getIsbn10() {
@@ -75,5 +112,45 @@ public class Book {
 
     public void setIsbn13(String isbn13) {
         this.isbn13 = isbn13;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<UsersAddBooks> getUsersAddBooks() {
+        return usersAddBooks;
+    }
+
+    public void setUsersAddBooks(List<UsersAddBooks> usersAddBooks) {
+        this.usersAddBooks = usersAddBooks;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", authors=" + authors +
+                ", categories=" + categories +
+                ", language='" + language + '\'' +
+                ", pageCount=" + pageCount +
+                ", imageRef='" + imageRef + '\'' +
+                ", description='" + description + '\'' +
+                ", isbn10='" + isbn10 + '\'' +
+                ", isbn13='" + isbn13 + '\'' +
+                '}';
     }
 }

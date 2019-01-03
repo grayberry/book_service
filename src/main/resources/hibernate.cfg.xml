@@ -5,11 +5,16 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">root</property>
-
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
 
-        <property name="hbm2ddl.auto">validate</property>
+        <property name="hbm2ddl.auto">update</property>
 
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
+
+        <mapping class="am.dreamteam.bookservice.entities.books.Author"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.books.Category"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.books.Book"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.users.User"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.users.UsersAddBooks"></mapping>
     </session-factory>
 </hibernate-configuration>

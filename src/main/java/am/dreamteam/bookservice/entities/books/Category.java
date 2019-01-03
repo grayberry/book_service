@@ -1,10 +1,22 @@
 package am.dreamteam.bookservice.entities.books;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "categories")
 public class Category {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "category")
     private String category;
 
     public Category() {
+    }
+
+    public Category(String category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -21,5 +33,10 @@ public class Category {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "'" + category + "'";
     }
 }
