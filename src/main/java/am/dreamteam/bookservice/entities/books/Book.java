@@ -12,9 +12,9 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, columnDefinition = "VARCHAR(255)")
     private String title;
-    @Column(name = "language")
+    @Column(name = "language", nullable = false, columnDefinition = "VARCHAR(255")
     private String language;
     @Column(name = "page_count")
     private int pageCount;
@@ -22,6 +22,8 @@ public class Book {
     private String imageRef;
     @Column(name = "description")
     private String description;
+    @Column(name = "rating", nullable = false, columnDefinition = "integer default 0")
+    private int rating;
     @Column(name = "isbn_10")
     private String isbn10;
     @Column(name = "isbn_13")
@@ -98,6 +100,14 @@ public class Book {
         this.description = description;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public String getIsbn10() {
         return isbn10;
     }
@@ -149,6 +159,7 @@ public class Book {
                 ", pageCount=" + pageCount +
                 ", imageRef='" + imageRef + '\'' +
                 ", description='" + description + '\'' +
+                ", rating=" + rating +
                 ", isbn10='" + isbn10 + '\'' +
                 ", isbn13='" + isbn13 + '\'' +
                 '}';

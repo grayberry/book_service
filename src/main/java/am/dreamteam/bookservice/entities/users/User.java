@@ -1,8 +1,5 @@
 package am.dreamteam.bookservice.entities.users;
-
-import am.dreamteam.bookservice.entities.books.Book;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -33,10 +30,11 @@ public class User {
     @CreationTimestamp
     @Column(name = "reg_date")
     private Date regDate;
+    @Column(name = "remove")
+    private boolean remove;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "users_add_books",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<Book> userBooks;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UsersAddBooks> userBooks;
 
     public User() {
     }
@@ -129,14 +127,36 @@ public class User {
         this.regDate = regDate;
     }
 
-    public List<Book> getUserBooks() {
+    public List<UsersAddBooks> getUserBooks() {
         return userBooks;
     }
 
-    public void setUserBooks(List<Book> userBooks) {
+    public void setUserBooks(List<UsersAddBooks> userBooks) {
         this.userBooks = userBooks;
     }
-    public void appendBooks(Book book){
-        this.userBooks.add(book);
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", pass='" + pass + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNimber='" + phoneNimber + '\'' +
+                ", sex='" + sex + '\'' +
+                ", tips=" + tips +
+                ", rating=" + rating +
+                ", regDate=" + regDate +
+                ", userBooks=" + userBooks +
+                '}';
     }
 }

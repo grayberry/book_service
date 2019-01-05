@@ -1,9 +1,11 @@
 package am.dreamteam.bookservice;
 
+import am.dreamteam.bookservice.daoimpl.*;
 import am.dreamteam.bookservice.entities.books.Author;
 import am.dreamteam.bookservice.entities.books.Book;
 import am.dreamteam.bookservice.entities.books.Category;
 import am.dreamteam.bookservice.entities.users.User;
+import am.dreamteam.bookservice.entities.users.UsersAddBooks;
 import am.dreamteam.bookservice.util.HibernateUtil;
 import org.hibernate.Session;
 
@@ -15,7 +17,6 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean signIn = false;
     private static User user = null;
-    private static List<Book> books = null;
 
     public static void main(String[] args) {
 
@@ -73,11 +74,12 @@ public class Main {
         System.out.println("your sex: M or F");
         sex = scanner.nextLine();
 
-        session.beginTransaction();
         user = new User(login, pass,email,phoneNumber,sex);
-        session.save(user);
-        session.getTransaction().commit();
-        System.out.println("new user " + login + " created");
+        if(new UserDAOImpl().regUser(user)) {
+            System.out.println("new user " + login + " created");
+        } else {
+            System.out.println("Something goes wrong");
+        }
 
     }
 
@@ -86,20 +88,17 @@ public class Main {
         System.out.println("your login");
         login = scanner.nextLine();
 
-        TypedQuery<User> query = session.createQuery("from User where login = :l", User.class);
-        query.setParameter("l", login);
-        List<User> userList = query.getResultList();
-        if(userList.isEmpty()){
+
+        if(!(new UserDAOImpl().checkUser(login))){
             System.out.println("Your login is not correct, please try again");
             signIn();
         }
         else {
-            user = userList.get(0);
+
             for(int i = 5; i>0; i--){
                 System.out.println("enter pass");
-                if(user.getPass().equals(scanner.nextLine())){
+                if((user = new UserDAOImpl().login(login, scanner.nextLine()))!=null){
                     System.out.println("Welcome " + user.getLogin());
-                    System.out.println("your books list + " + user.getUserBooks());
                     signIn = true;
                     break;
                 }else {
@@ -110,16 +109,11 @@ public class Main {
     }
 
     private static void one(){
-        TypedQuery<Book> q = session.createQuery("from Book", Book.class);
-        List<Book> b = q.getResultList();
-        b.forEach(x -> {
-            x.getUsersAddBooks().forEach(System.out::println);
-        });
-
+       List<UsersAddBooks> usersAddBooks = new UsersAddBooksDAOImpl().getListUsersAddBooks();
+       usersAddBooks.forEach(System.out::println);
     }
 
     private static void two(){
-        session.beginTransaction();
         Author author = new Author();
         System.out.println("Author full name");
         author.setFullName(scanner.nextLine());
@@ -159,18 +153,18 @@ public class Main {
             categoryList.add(category);
             book.setCategories(categoryList);
 
-            session.save(author);
-            session.save(category);
-            session.save(book);
+            new AuthorDAOImpl().addAuthor(author);
+            new CategoryDAOImpl().addCategory(category);
+            new BookDAOImpl().addBook(book);
         }
-
-        user.appendBooks(book);
-        session.getTransaction().commit();
+        UsersAddBooks usersAddBooks = new UsersAddBooks(user, book);
+        new UsersAddBooksDAOImpl().addUsersAddBooks(usersAddBooks);
 
     }
 
     public static void three(){
-        user.getUserBooks().forEach(System.out::println);
+        List<UsersAddBooks> usersAddBooks = new UserDAOImpl().showUserBooks(user);
+        usersAddBooks.forEach(System.out::println);
     }
 
     public static void quit(){

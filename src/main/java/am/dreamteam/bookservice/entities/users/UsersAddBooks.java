@@ -2,7 +2,6 @@ package am.dreamteam.bookservice.entities.users;
 
 import am.dreamteam.bookservice.entities.books.Book;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -12,13 +11,16 @@ public class UsersAddBooks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "book_id", insertable = false, updatable = false)
-    private int bookId;
     @CreationTimestamp
     @Column(name = "upload_date")
     private Date uploadDate;
+    @Column(name = "remove")
+    private boolean remove;
+    @Column(name = "change")
+    private boolean change;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
@@ -27,28 +29,17 @@ public class UsersAddBooks {
     public UsersAddBooks() {
     }
 
+    public UsersAddBooks(User user, Book book) {
+        this.user = user;
+        this.book = book;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
     }
 
     public Date getUploadDate() {
@@ -67,12 +58,19 @@ public class UsersAddBooks {
         this.book = book;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "UsersAddBooks{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", bookId=" + bookId +
+                ", user: " + user.getLogin() +
                 ", uploadDate=" + uploadDate +
                 ", book=" + book +
                 '}';

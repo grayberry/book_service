@@ -9,14 +9,17 @@ CREATE TABLE users(
     sex VARCHAR(255) NOT NULL,
     tips INTEGER,
     rating INTEGER,
-    reg_data date NOT NULL DEFAULT now()
+    reg_date date NOT NULL DEFAULT now(),
+    remove boolean not null default false
 );
 
 CREATE TABLE users_add_books(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
     book_id INTEGER REFERENCES books(id) on update cascade on delete cascade,
-    upload_date date NOT NULL
+    upload_date date NOT NULL default now(),
+    remove boolean not null default false,
+    change boolean not null default true
 );
 
 CREATE TABLE transfers(
@@ -24,5 +27,5 @@ CREATE TABLE transfers(
     from_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
     to_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
     book_id INTEGER REFERENCES users_add_books(id) on update cascade on delete cascade,
-    transfer_date date NOT NULL
+    transfer_date date NOT NULL default now()
 );

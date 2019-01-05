@@ -1,5 +1,4 @@
-CREATE DATABASE book_service;
-USE book_service;
+
 
 CREATE TABLE if not exists categories(
                    id SERIAL primary key ,
@@ -13,11 +12,12 @@ CREATE TABLE if not exists authors(
 
 CREATE TABLE books(
                     id SERIAL primary key ,
-                    title VARCHAR(255),
-                    language VARCHAR(255),
+                    title VARCHAR(255) not null,
+                    language VARCHAR(255)not null,
                     page_count INT NOT NULL,
                     image_ref VARCHAR(255),
                     description TEXT,
+                    rating INT default 0,
                     isbn_10 VARCHAR(255),
                     isbn_13 VARCHAR(255)
 );
