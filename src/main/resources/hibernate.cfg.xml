@@ -16,5 +16,6 @@
         <mapping class="am.dreamteam.bookservice.entities.books.Book"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.users.User"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.users.UsersAddBooks"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.users.Transfer"></mapping>
     </session-factory>
 </hibernate-configuration>

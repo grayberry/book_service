@@ -1,21 +1,23 @@
 package am.dreamteam.bookservice.util;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final Session SESSION = buildSession();
 
-
-    private static SessionFactory buildSessionFactory(){
-        return new Configuration().configure().buildSessionFactory();
+    private static Session buildSession(){
+        final SessionFactory sessionFactory= new Configuration().configure().buildSessionFactory();
+        final Session session = sessionFactory.openSession();
+        return session;
     }
 
-    public static SessionFactory getSessionFactory(){
-        return sessionFactory;
+    public static Session getSession(){
+        return SESSION;
     }
 
     public static void shutDown(){
-        getSessionFactory().close();
+        getSession().close();
     }
 }

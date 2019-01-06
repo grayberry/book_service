@@ -11,6 +11,6 @@ public interface UserDAO extends Serializable {
     boolean checkUser(String login);
     boolean regUser(User user);
     User login(String login, String password);
-    List<UsersAddBooks> showUserBooks(User user);
+    List<UsersAddBooks> getUserBooks(User user);
 
 }

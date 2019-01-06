@@ -1,12 +1,11 @@
-package am.dreamteam.bookservice.dao;
+package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.users.UsersAddBooks;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface UsersAddBooksDAO extends Serializable {
+public interface UsersAddBooksService {
     UsersAddBooks findUsersAddBooksById(int id);
     boolean addUsersAddBooks(UsersAddBooks usersAddBooks);
-    List<UsersAddBooks> getListUsersAddBooksList();
+    List<UsersAddBooks> getUsersAddBooksList();
 }

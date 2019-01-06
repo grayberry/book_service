@@ -1,11 +1,10 @@
-package am.dreamteam.bookservice.dao;
+package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.books.Category;
 
-import java.io.Serializable;
 import java.util.Set;
 
-public interface CategoryDAO extends Serializable {
+public interface CategoryService {
     Category getCategoryById(int id);
     Category getCategoryByName(String name);
     boolean addCategory(Category category);

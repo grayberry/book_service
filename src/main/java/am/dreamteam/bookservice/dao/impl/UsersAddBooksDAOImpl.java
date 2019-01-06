@@ -1,4 +1,4 @@
-package am.dreamteam.bookservice.daoimpl;
+package am.dreamteam.bookservice.dao.impl;
 
 import am.dreamteam.bookservice.dao.UsersAddBooksDAO;
 import am.dreamteam.bookservice.entities.users.UsersAddBooks;
@@ -11,16 +11,17 @@ import java.util.List;
 public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
     @Override
     public UsersAddBooks findUsersAddBooksById(int id) {
-        return HibernateUtil.getSessionFactory().openSession().get(UsersAddBooks.class, id);
+        return HibernateUtil.getSession().get(UsersAddBooks.class, id);
     }
 
     @Override
     public boolean addUsersAddBooks(UsersAddBooks usersAddBooks) {
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession()
+            Session session = HibernateUtil.getSession();
             session.beginTransaction();
             session.save(usersAddBooks);
             session.getTransaction().commit();
+            System.out.println("user book has added");
             return true;
         } catch (Throwable e){
             e.printStackTrace();
@@ -29,9 +30,9 @@ public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
     }
 
     @Override
-    public List<UsersAddBooks> getListUsersAddBooks() {
+    public List<UsersAddBooks> getListUsersAddBooksList() {
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            Session session = HibernateUtil.getSession();
             TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks", UsersAddBooks.class);
             return query.getResultList();
         }catch (Throwable e){

@@ -36,6 +36,12 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UsersAddBooks> userBooks;
 
+    @OneToMany(mappedBy = "userTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transfer> transfersTo;
+
+    @OneToMany(mappedBy = "userFrom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transfer> transfersFrom;
+
     public User() {
     }
 
@@ -141,6 +147,22 @@ public class User {
 
     public void setRemove(boolean remove) {
         this.remove = remove;
+    }
+
+    public List<Transfer> getTransfersTo() {
+        return transfersTo;
+    }
+
+    public void setTransfersTo(List<Transfer> transfersTo) {
+        this.transfersTo = transfersTo;
+    }
+
+    public List<Transfer> getTransfersFrom() {
+        return transfersFrom;
+    }
+
+    public void setTransfersFrom(List<Transfer> transfersFrom) {
+        this.transfersFrom = transfersFrom;
     }
 
     @Override

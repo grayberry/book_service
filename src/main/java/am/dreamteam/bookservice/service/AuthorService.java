@@ -1,11 +1,10 @@
-package am.dreamteam.bookservice.dao;
+package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.books.Author;
 
-import java.io.Serializable;
 import java.util.Set;
 
-public interface AuthorDAO extends Serializable {
+public interface AuthorService {
     Author getAuthorById(int id);
     Author getAuthorByName(String name);
     boolean addAuthor(Author author);

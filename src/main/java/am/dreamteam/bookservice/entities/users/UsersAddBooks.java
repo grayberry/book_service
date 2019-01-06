@@ -4,6 +4,7 @@ import am.dreamteam.bookservice.entities.books.Book;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users_add_books")
@@ -25,6 +26,9 @@ public class UsersAddBooks {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
+
+    @OneToMany(mappedBy = "usersAddBooks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transfer> transfersBook;
 
     public UsersAddBooks() {
     }
@@ -64,6 +68,30 @@ public class UsersAddBooks {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
+    }
+
+    public boolean isChange() {
+        return change;
+    }
+
+    public void setChange(boolean change) {
+        this.change = change;
+    }
+
+    public List<Transfer> getTransfersBook() {
+        return transfersBook;
+    }
+
+    public void setTransfersBook(List<Transfer> transfersBook) {
+        this.transfersBook = transfersBook;
     }
 
     @Override

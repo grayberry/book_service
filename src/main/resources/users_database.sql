@@ -10,7 +10,7 @@ CREATE TABLE users(
     tips INTEGER,
     rating INTEGER,
     reg_date date NOT NULL DEFAULT now(),
-    remove boolean not null default false
+    removed boolean not null default false
 );
 
 CREATE TABLE users_add_books(
@@ -18,8 +18,8 @@ CREATE TABLE users_add_books(
     user_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
     book_id INTEGER REFERENCES books(id) on update cascade on delete cascade,
     upload_date date NOT NULL default now(),
-    remove boolean not null default false,
-    change boolean not null default true
+    removed boolean not null default false,
+    to_change boolean not null default true
 );
 
 CREATE TABLE transfers(
