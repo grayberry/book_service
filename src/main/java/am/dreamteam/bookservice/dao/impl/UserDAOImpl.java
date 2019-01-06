@@ -63,6 +63,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<UsersAddBooks> getUserBooks(User user) {
-        return findUserById(user.getId()).getUserBooks();
+        try {
+            Session session = HibernateUtil.getSession();
+            TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks where user_id=:id", UsersAddBooks.class);
+            query.setParameter("id", user.getId());
+            return query.getResultList();
+        } catch (Throwable e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

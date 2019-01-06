@@ -166,14 +166,20 @@ public class Main {
         user1.getUserBooks().forEach(System.out::println);
 
         System.out.println("choose your book id");
-        int id1 = scanner.nextInt();
+        int id1 = Integer.valueOf(scanner.nextLine());
         System.out.println("choose book id for change");
-        int id2 = scanner.nextInt();
+        int id2 = Integer.valueOf(scanner.nextLine());
 
         UsersAddBooks usersAddBooks1 = usersAddBooksService.findUsersAddBooksById(id1);
         UsersAddBooks usersAddBooks2 = usersAddBooksService.findUsersAddBooksById(id2);
-        transferService.createTransfer(user, user1, usersAddBooks1, usersAddBooks2);
 
+        System.out.print("change book " + usersAddBooks1.getBook().getTitle() +
+                " to book " + usersAddBooks2.getBook().getTitle() + "?\n Y:");
+        if(!scanner.nextLine().toUpperCase().equals("Y")){
+            return;
+        }
+        transferService.createTransfer(user, user1, usersAddBooks1, usersAddBooks2);
+        System.out.println("DONE!");
     }
 
     public static void quit(){

@@ -23,7 +23,7 @@ public class UsersAddBooks {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 
