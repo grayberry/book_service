@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface UsersAddBooksDAO extends Serializable {
-    UsersAddBooks findUsersAddBooksById(int id);
+    UsersAddBooks getUsersAddBooksById(int id);
     boolean addUsersAddBooks(UsersAddBooks usersAddBooks);
-    List<UsersAddBooks> getListUsersAddBooksList();
+    List<UsersAddBooks> getUsersAddBooksList();
 }

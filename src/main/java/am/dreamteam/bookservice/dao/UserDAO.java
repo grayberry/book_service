@@ -7,10 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface UserDAO extends Serializable {
-    User findUserById(int id);
+    User getUserById(int id);
     boolean checkUser(String login);
     boolean regUser(User user);
     User login(String login, String password);
+    List<User> getAllUsersList();
     List<UsersAddBooks> getUserBooks(User user);
 
 }

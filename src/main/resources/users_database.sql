@@ -7,8 +7,9 @@ CREATE TABLE users(
     email VARCHAR(255) NOT NULL UNIQUE,
     phone_number VARCHAR(255) NOT NULL UNIQUE,
     sex VARCHAR(255) NOT NULL,
-    tips INTEGER,
-    rating INTEGER,
+    photo VARCHAR(255),
+    tips INTEGER default 0,
+    rating INTEGER default 0,
     reg_date date NOT NULL DEFAULT now(),
     removed boolean not null default false
 );

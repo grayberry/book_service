@@ -23,6 +23,8 @@ public class User {
     private String phoneNimber;
     @Column(name = "sex")
     private String sex;
+    @Column(name = "photo")
+    private String photo;
     @Column(name = "tips")
     private int tips;
     @Column(name = "rating")
@@ -52,6 +54,7 @@ public class User {
         this.email = email;
         this.phoneNimber = phoneNimber;
         this.sex = sex;
+        this.userBooks = new ArrayList<>();
     }
 
     public int getId() {
@@ -108,6 +111,14 @@ public class User {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public int getTips() {

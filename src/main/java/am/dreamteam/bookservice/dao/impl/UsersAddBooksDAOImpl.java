@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
     @Override
-    public UsersAddBooks findUsersAddBooksById(int id) {
+    public UsersAddBooks getUsersAddBooksById(int id) {
         return HibernateUtil.getSession().get(UsersAddBooks.class, id);
     }
 
@@ -30,7 +30,7 @@ public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
     }
 
     @Override
-    public List<UsersAddBooks> getListUsersAddBooksList() {
+    public List<UsersAddBooks> getUsersAddBooksList() {
         try {
             Session session = HibernateUtil.getSession();
             TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks", UsersAddBooks.class);

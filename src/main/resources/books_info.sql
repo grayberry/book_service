@@ -17,7 +17,7 @@ CREATE TABLE books(
                     page_count INT NOT NULL,
                     image_ref VARCHAR(255),
                     description TEXT,
-                    rating INT default 0,
+                    rating INTEGER default 0,
                     isbn_10 VARCHAR(255),
                     isbn_13 VARCHAR(255)
 );

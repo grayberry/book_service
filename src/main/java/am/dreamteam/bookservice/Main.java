@@ -1,11 +1,12 @@
 package am.dreamteam.bookservice;
 
-import am.dreamteam.bookservice.dao.impl.*;
 import am.dreamteam.bookservice.entities.books.Author;
 import am.dreamteam.bookservice.entities.books.Book;
 import am.dreamteam.bookservice.entities.books.Category;
 import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.service.TransferService;
+import am.dreamteam.bookservice.service.UserService;
 import am.dreamteam.bookservice.service.impl.*;
 import am.dreamteam.bookservice.util.HibernateUtil;
 
@@ -62,6 +63,7 @@ public class Main {
     }
 
     private static void reg(){
+        UserService userService = new UserServiceImpl();
         String login;
         String pass;
         String email;
@@ -69,31 +71,37 @@ public class Main {
         String sex;
         System.out.println("enter login");
         login = scanner.nextLine();
-        System.out.println("enter pass");
-        pass = scanner.nextLine();
-        System.out.println("enter email");
-        email = scanner.nextLine();
-        System.out.println("enter phone number");
-        phoneNumber = scanner.nextLine();
-        System.out.println("your sex: M or F");
-        sex = scanner.nextLine();
-
-        user = new User(login, pass,email,phoneNumber,sex);
-        if(new UserDAOImpl().regUser(user)) {
-            System.out.println("new user " + login + " created");
+        if(userService.checkUser(login)){
+            System.out.println("This user is already exists");
+            reg();
         } else {
-            System.out.println("Something goes wrong");
+            System.out.println("enter pass");
+            pass = scanner.nextLine();
+            System.out.println("enter email");
+            email = scanner.nextLine();
+            System.out.println("enter phone number");
+            phoneNumber = scanner.nextLine();
+            System.out.println("your sex: M or F");
+            sex = scanner.nextLine();
+
+            user = new User(login, pass, email, phoneNumber, sex);
+            if (userService.regUser(user)) {
+                System.out.println("new user " + login + " created");
+            } else {
+                System.out.println("Your phone number and email must be unique!");
+            }
         }
 
     }
 
     private static void signIn(){
+        UserService userService = new UserServiceImpl();
         String login;
         System.out.println("your login");
         login = scanner.nextLine();
 
 
-        if(!(new UserDAOImpl().checkUser(login))){
+        if(!(userService.checkUser(login))){
             System.out.println("Your login is not correct, please try again");
             signIn();
         }
@@ -101,7 +109,7 @@ public class Main {
 
             for(int i = 5; i>0; i--){
                 System.out.println("enter pass");
-                if((user = new UserDAOImpl().login(login, scanner.nextLine()))!=null){
+                if((user = userService.login(login, scanner.nextLine()))!=null){
                     System.out.println("Welcome " + user.getLogin());
                     signIn = true;
                     break;
@@ -113,12 +121,11 @@ public class Main {
     }
 
     private static void one(){
-       List<UsersAddBooks> usersAddBooks = new UsersAddBooksDAOImpl().getListUsersAddBooksList();
+       List<UsersAddBooks> usersAddBooks = new UsersAddBooksServiceImpl().getUsersAddBooksList();
        usersAddBooks.forEach(System.out::println);
     }
 
     private static void two(){
-
         BookServiceImpl bookService = new BookServiceImpl();
         UsersAddBooksServiceImpl usersAddBooksService = new UsersAddBooksServiceImpl();
 
@@ -134,7 +141,6 @@ public class Main {
         String description = "lav girq";
         String isbn10 = "123";
         String isbn13 = "546789";
-
         System.out.println("title");
         title = scanner.nextLine();
         System.out.println("language");
@@ -150,36 +156,53 @@ public class Main {
     }
 
     public static void three(){
-        UserServiceImpl userService = new UserServiceImpl();
+        UserService userService = new UserServiceImpl();
         List<UsersAddBooks> usersAddBooks = userService.getUsersAddBooks(user);
         usersAddBooks.forEach(System.out::println);
     }
 
     public static void four(){
-        UserServiceImpl userService = new UserServiceImpl();
-        UsersAddBooksServiceImpl usersAddBooksService = new UsersAddBooksServiceImpl();
-        TransferServiceImpl transferService = new TransferServiceImpl();
-        User user1 = userService.findUserById(2); //hl@ vor dzerov @Ntrelem 2id ov user-in
-        System.out.println("My books");
-        user.getUserBooks().forEach(System.out::println);
-        System.out.println("his books");
-        user1.getUserBooks().forEach(System.out::println);
+        UserService userService = new UserServiceImpl();
+        TransferService transferService = new TransferServiceImpl();
 
+        User user1 = userService.getUserById(20); //hl@ vor dzerov @Ntrelem user-in
+        List<UsersAddBooks> myBooksList = userService.getUsersAddBooks(user);
+        if(!forEachBooks(myBooksList)){
+            System.out.println("you don't have books for transfer");
+            return;
+        }
+        List<UsersAddBooks> hisBooksList = userService.getUsersAddBooks(user1);
+        if(!forEachBooks(hisBooksList)){
+            System.out.println("user has no books");
+            return;
+        }
         System.out.println("choose your book id");
         int id1 = Integer.valueOf(scanner.nextLine());
         System.out.println("choose book id for change");
         int id2 = Integer.valueOf(scanner.nextLine());
 
-        UsersAddBooks usersAddBooks1 = usersAddBooksService.findUsersAddBooksById(id1);
-        UsersAddBooks usersAddBooks2 = usersAddBooksService.findUsersAddBooksById(id2);
+        UsersAddBooks usersAddBooks1 = myBooksList.get(id1-1);
+        UsersAddBooks usersAddBooks2 = hisBooksList.get(id2-1);
 
-        System.out.print("change book " + usersAddBooks1.getBook().getTitle() +
-                " to book " + usersAddBooks2.getBook().getTitle() + "?\n Y:");
+        System.out.print("change book '" + usersAddBooks1.getBook().getTitle() +
+                "' to book '" + usersAddBooks2.getBook().getTitle() + "'?\n Y:");
         if(!scanner.nextLine().toUpperCase().equals("Y")){
             return;
         }
         transferService.createTransfer(user, user1, usersAddBooks1, usersAddBooks2);
         System.out.println("DONE!");
+    }
+
+    private static boolean forEachBooks(List<UsersAddBooks> booksList){
+        if(!booksList.isEmpty()) {
+            System.out.println(booksList.get(0).getUser().getLogin() + " books list");
+            for (int i = 0; i < booksList.size(); i++) {
+                System.out.println(i + 1 + " '" + booksList.get(i).getBook().getTitle() +
+                        "' - " + booksList.get(i).getBook().getAuthors());
+            }
+            return true;
+        }
+        return false;
     }
 
     public static void quit(){

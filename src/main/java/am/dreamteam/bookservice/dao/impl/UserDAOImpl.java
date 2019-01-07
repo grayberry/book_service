@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public User findUserById(int id) {
+    public User getUserById(int id) {
         return HibernateUtil.getSession().get(User.class, id);
     }
 
@@ -25,7 +25,6 @@ public class UserDAOImpl implements UserDAO {
             query.getSingleResult();
             return true;
         } catch (javax.persistence.NoResultException e){
-            System.out.println("User not exist");
           //  e.printStackTrace();
             return false;
         }
@@ -34,15 +33,24 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean regUser(User user) {
+
         try{
             Session session = HibernateUtil.getSession();
+            TypedQuery<User> query = session.createQuery("from User where phone_number=:number or email=:email", User.class);
+            query.setParameter("number", user.getPhoneNimber());
+            query.setParameter("email", user.getEmail());
+            List<User> check = query.getResultList();
+            if(!check.isEmpty()){
+                return false;
+            }
+
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
             System.out.println("user is registered");
             return true;
-        } catch (Throwable e){
-            e.printStackTrace();
+        } catch (org.hibernate.exception.ConstraintViolationException e){
+            //e.printStackTrace();
             return false;
         }
     }
@@ -57,6 +65,17 @@ public class UserDAOImpl implements UserDAO {
             return query.getSingleResult();
         } catch (javax.persistence.NoResultException e){
            // e.printStackTrace();
+            return null;
+        }
+    }
+    @Override
+    public List<User> getAllUsersList(){
+        try{
+            Session session = HibernateUtil.getSession();
+            TypedQuery<User> query = session.createQuery("from User", User.class);
+            return query.getResultList();
+        } catch (Throwable e){
+            e.printStackTrace();
             return null;
         }
     }

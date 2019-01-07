@@ -1,5 +1,6 @@
 package am.dreamteam.bookservice.service.impl;
 
+import am.dreamteam.bookservice.dao.UserDAO;
 import am.dreamteam.bookservice.dao.impl.UserDAOImpl;
 import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.entities.users.UsersAddBooks;
@@ -9,11 +10,16 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    UserDAOImpl userDAO = new UserDAOImpl();
+    UserDAO userDAO = new UserDAOImpl();
 
     @Override
-    public User findUserById(int id) {
-        return userDAO.findUserById(id);
+    public User getUserById(int id) {
+        return userDAO.getUserById(id);
+    }
+
+    @Override
+    public boolean checkUser(String login){
+        return userDAO.checkUser(login);
     }
 
     @Override
@@ -26,6 +32,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean regUser(User user) {
         return userDAO.regUser(user);
+    }
+
+    @Override
+    public List<User> getAllUsersList() {
+        return userDAO.getAllUsersList();
     }
 
     @Override

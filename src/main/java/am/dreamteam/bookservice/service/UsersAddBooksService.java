@@ -5,7 +5,7 @@ import am.dreamteam.bookservice.entities.users.UsersAddBooks;
 import java.util.List;
 
 public interface UsersAddBooksService {
-    UsersAddBooks findUsersAddBooksById(int id);
+    UsersAddBooks getUsersAddBooksById(int id);
     boolean addUsersAddBooks(UsersAddBooks usersAddBooks);
     List<UsersAddBooks> getUsersAddBooksList();
 }
