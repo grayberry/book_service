@@ -11,13 +11,17 @@ import java.util.List;
 public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
     @Override
     public UsersAddBooks getUsersAddBooksById(int id) {
-        return HibernateUtil.getSession().get(UsersAddBooks.class, id);
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(UsersAddBooks.class, id);
+        }catch (javax.persistence.NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean addUsersAddBooks(UsersAddBooks usersAddBooks) {
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             session.save(usersAddBooks);
             session.getTransaction().commit();
@@ -31,8 +35,7 @@ public class UsersAddBooksDAOImpl implements UsersAddBooksDAO {
 
     @Override
     public List<UsersAddBooks> getUsersAddBooksList() {
-        try {
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks", UsersAddBooks.class);
             return query.getResultList();
         }catch (Throwable e){

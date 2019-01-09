@@ -13,13 +13,17 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(int id) {
-        return HibernateUtil.getSession().get(User.class, id);
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            return session.get(User.class, id);
+        }catch (javax.persistence.NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean checkUser(String login) {
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<User> query = session.createQuery("from User where login=:login", User.class);
             query.setParameter("login", login);
             query.getSingleResult();
@@ -34,8 +38,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean regUser(User user) {
 
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<User> query = session.createQuery("from User where phone_number=:number or email=:email", User.class);
             query.setParameter("number", user.getPhoneNimber());
             query.setParameter("email", user.getEmail());
@@ -57,8 +60,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User login(String login, String password) {
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<User> query = session.createQuery("from User where login=:login and pass=:pass", User.class);
             query.setParameter("login", login);
             query.setParameter("pass", password);
@@ -70,8 +72,7 @@ public class UserDAOImpl implements UserDAO {
     }
     @Override
     public List<User> getAllUsersList(){
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<User> query = session.createQuery("from User", User.class);
             return query.getResultList();
         } catch (Throwable e){
@@ -82,8 +83,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<UsersAddBooks> getUserBooks(User user) {
-        try {
-            Session session = HibernateUtil.getSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+
             TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks where user_id=:id", UsersAddBooks.class);
             query.setParameter("id", user.getId());
             return query.getResultList();

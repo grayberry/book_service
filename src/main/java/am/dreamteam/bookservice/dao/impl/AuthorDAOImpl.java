@@ -13,14 +13,17 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public Author getAuthorById(int id) {
-        return HibernateUtil.getSession().get(Author.class, id);
-
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            return session.get(Author.class, id);
+        } catch (javax.persistence.NoResultException e){
+            e.printStackTrace();
+            return  null;
+        }
     }
 
     @Override
     public Author getAuthorByName(String name) {
-        try {
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<Author> query = session.createQuery("from Author where full_name=:name", Author.class);
             query.setParameter("name", name);
             Author author = query.getSingleResult();
@@ -33,8 +36,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public boolean addAuthor(Author author) {
-        try {
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.save(author);
             session.getTransaction().commit();

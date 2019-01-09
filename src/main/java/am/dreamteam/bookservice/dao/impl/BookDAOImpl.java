@@ -14,14 +14,18 @@ import java.util.Set;
 public class BookDAOImpl implements BookDAO {
     @Override
     public Book getBookById(int id) {
-        return HibernateUtil.getSession().get(Book.class, id);
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+           return session.get(Book.class, id);
+        }catch (javax.persistence.NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Book checkBookUnique(String title, String language, Set<Author> authors) {
 
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session =HibernateUtil.getSessionFactory().openSession() ){
             TypedQuery<Book> query = session.createQuery("from Book where title=:title and language=:language", Book.class);
             query.setParameter("title", title);
             query.setParameter("language", language);
@@ -45,8 +49,7 @@ public class BookDAOImpl implements BookDAO {
     public boolean addBook(Book book, Set<Author> authors, Set<Category>categories) {
         book.setAuthors(authors);
         book.setCategories(categories);
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             session.save(book);
             session.getTransaction().commit();

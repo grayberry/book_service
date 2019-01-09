@@ -10,13 +10,17 @@ import org.hibernate.Session;
 public class TransferDAOImpl implements TransferDAO {
     @Override
     public Transfer getTransferById(int id) {
-        return HibernateUtil.getSession().get(Transfer.class, id);
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Transfer.class, id);
+        } catch (javax.persistence.NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean createTransfer(User from, User to, UsersAddBooks fromBook, UsersAddBooks toBook) {
-        try {
-            Session session = HibernateUtil.getSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Transfer transferFrom = new Transfer(from, to, fromBook);
             Transfer transferTo = new Transfer(to, from, toBook);
             fromBook.setUser(to);

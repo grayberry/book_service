@@ -11,13 +11,18 @@ import java.util.Set;
 public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Category getCategoryById(int id) {
-        return HibernateUtil.getSession().get(Category.class, id);
+
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Category.class, id);
+        }catch (javax.persistence.NoResultException e){
+             e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Category getCategoryByName(String name) {
-        try {
-            Session session = HibernateUtil.getSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<Category> query = session.createQuery("from Category where category=:name", Category.class);
             query.setParameter("name", name);
             Category category = query.getSingleResult();
@@ -30,8 +35,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public boolean addCategory(Category category) {
-        try{
-            Session session = HibernateUtil.getSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             session.save(category);
             session.getTransaction().commit();

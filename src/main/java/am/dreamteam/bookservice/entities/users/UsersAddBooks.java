@@ -19,15 +19,15 @@ public class UsersAddBooks {
     private boolean remove;
     @Column(name = "change")
     private boolean change;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @OneToMany(mappedBy = "usersAddBooks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usersAddBooks", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transfer> transfersBook;
 
     public UsersAddBooks() {

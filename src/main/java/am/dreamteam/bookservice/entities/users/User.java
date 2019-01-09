@@ -36,13 +36,13 @@ public class User {
     @Column(name = "remove")
     private boolean remove;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UsersAddBooks> userBooks;
 
-    @OneToMany(mappedBy = "userTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userTo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transfer> transfersTo;
 
-    @OneToMany(mappedBy = "userFrom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userFrom", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transfer> transfersFrom;
 
     public User() {
