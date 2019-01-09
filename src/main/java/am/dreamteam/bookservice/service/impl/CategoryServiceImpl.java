@@ -1,5 +1,6 @@
 package am.dreamteam.bookservice.service.impl;
 
+import am.dreamteam.bookservice.dao.CategoryDAO;
 import am.dreamteam.bookservice.dao.impl.CategoryDAOImpl;
 import am.dreamteam.bookservice.entities.books.Category;
 import am.dreamteam.bookservice.service.CategoryService;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 public class CategoryServiceImpl implements CategoryService {
 
-    CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
+    CategoryDAO categoryDAO = new CategoryDAOImpl();
 
     @Override
     public Category getCategoryById(int id) {

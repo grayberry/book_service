@@ -25,7 +25,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public Book checkBookUnique(String title, String language, Set<Author> authors) {
 
-        try(Session session =HibernateUtil.getSessionFactory().openSession() ){
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             TypedQuery<Book> query = session.createQuery("from Book where title=:title and language=:language", Book.class);
             query.setParameter("title", title);
             query.setParameter("language", language);

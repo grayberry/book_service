@@ -1,5 +1,6 @@
 package am.dreamteam.bookservice.service.impl;
 
+import am.dreamteam.bookservice.dao.AuthorDAO;
 import am.dreamteam.bookservice.dao.impl.AuthorDAOImpl;
 import am.dreamteam.bookservice.entities.books.Author;
 import am.dreamteam.bookservice.service.AuthorService;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 public class AuthorServiceImpl implements AuthorService {
 
-    AuthorDAOImpl authorDAO = new AuthorDAOImpl();
+    AuthorDAO authorDAO = new AuthorDAOImpl();
     @Override
     public Author getAuthorById(int id) {
         return authorDAO.getAuthorById(id);

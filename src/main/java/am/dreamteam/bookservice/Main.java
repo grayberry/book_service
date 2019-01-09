@@ -165,7 +165,7 @@ public class Main {
         UserService userService = new UserServiceImpl();
         TransferService transferService = new TransferServiceImpl();
 
-        User user1 = userService.getUserById(20); //hl@ vor dzerov @Ntrelem user-in
+        User user1 = userService.getUserById(1); //hl@ vor dzerov @Ntrelem user-in
         List<UsersAddBooks> myBooksList = userService.getUsersAddBooks(user);
         if(!forEachBooks(myBooksList)){
             System.out.println("you don't have books for transfer");

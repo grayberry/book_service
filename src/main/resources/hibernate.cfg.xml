@@ -4,7 +4,7 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/book_service</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
-        <property name="connection.password">root</property>
+        <property name="connection.password">root813</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
 
         <property name="hbm2ddl.auto">update</property>
