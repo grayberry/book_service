@@ -1,9 +1,9 @@
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    login VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
     pass VARCHAR(255) NOT NULL,
-    username VARCHAR(255),
+    altername VARCHAR(50),
     email VARCHAR(255) NOT NULL UNIQUE,
     phone_number VARCHAR(255) NOT NULL UNIQUE,
     sex VARCHAR(255) NOT NULL,
@@ -11,16 +11,16 @@ CREATE TABLE users(
     tips INTEGER default 0,
     rating INTEGER default 0,
     reg_date date NOT NULL DEFAULT now(),
-    removed boolean not null default false
+    is_removed boolean not null default false
 );
 
-CREATE TABLE users_add_books(
+CREATE TABLE users_books(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
     book_id INTEGER REFERENCES books(id) on update cascade on delete cascade,
     upload_date date NOT NULL default now(),
-    removed boolean not null default false,
-    to_change boolean not null default true
+    is_removed boolean not null default false,
+    for_transfer boolean not null default true
 );
 
 CREATE TABLE transfers(
@@ -30,3 +30,9 @@ CREATE TABLE transfers(
     book_id INTEGER REFERENCES users_add_books(id) on update cascade on delete cascade,
     transfer_date date NOT NULL default now()
 );
+
+CREATE TABLE favourite_books {
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
+    book_id INTEGER REFERENCES books(id) on update cascade on delete cascade
+}

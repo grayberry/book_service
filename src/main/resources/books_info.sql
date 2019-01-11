@@ -14,7 +14,7 @@ CREATE TABLE books(
                     id SERIAL primary key ,
                     title VARCHAR(255) not null,
                     language VARCHAR(255)not null,
-                    page_count INT NOT NULL,
+                    page_count INTEGER NOT NULL,
                     image_ref VARCHAR(255),
                     description TEXT,
                     rating INTEGER default 0,
@@ -23,13 +23,13 @@ CREATE TABLE books(
 );
 
 create table book_authors (
-                    book_id integer references books(id) on update cascade on delete cascade,
-                    author_id integer references authors(id) on update cascade on delete cascade,
+                    book_id INTEGER references books(id) on update cascade on delete cascade,
+                    author_id INTEGER references authors(id) on update cascade on delete cascade,
                     PRIMARY KEY (book_id, author_id)
 );
 
 create table book_categories (
-                    book_id integer references books(id) on update cascade on delete cascade,
-                    category_id integer references categories(id) on update cascade on delete cascade,
+                    book_id INTEGER references books(id) on update cascade on delete cascade,
+                    category_id INTEGER references categories(id) on update cascade on delete cascade,
                     PRIMARY KEY(book_id, category_id)
 );
