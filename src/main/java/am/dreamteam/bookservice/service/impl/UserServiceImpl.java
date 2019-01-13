@@ -3,7 +3,7 @@ package am.dreamteam.bookservice.service.impl;
 import am.dreamteam.bookservice.dao.UserDAO;
 import am.dreamteam.bookservice.dao.impl.UserDAOImpl;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.UserService;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UsersAddBooks> getUsersAddBooks(User user) {
+    public List<UserBooks> getUsersAddBooks(User user) {
         return userDAO.getUserBooks(user);
     }
 }

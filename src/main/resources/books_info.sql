@@ -1,5 +1,4 @@
 
-
 CREATE TABLE if not exists categories(
                    id SERIAL primary key ,
                    category VARCHAR(255) unique not null

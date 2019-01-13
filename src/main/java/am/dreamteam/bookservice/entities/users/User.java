@@ -11,16 +11,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "login")
-    private String login;
-    @Column(name = "pass")
-    private String pass;
     @Column(name = "username")
     private String username;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "phone_number")
-    private String phoneNimber;
+    @Column(name = "altername")
+    private String altername;
     @Column(name = "sex")
     private String sex;
     @Column(name = "photo")
@@ -33,28 +27,15 @@ public class User {
     @CreationTimestamp
     @Column(name = "reg_date")
     private Date regDate;
-    @Column(name = "remove")
-    private boolean remove;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<UsersAddBooks> userBooks;
-
-    @OneToMany(mappedBy = "userTo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Transfer> transfersTo;
-
-    @OneToMany(mappedBy = "userFrom", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Transfer> transfersFrom;
+    @Column(name = "isRemove")
+    private boolean isRemove;
 
     public User() {
     }
 
-    public User(String login, String pass, String email, String phoneNimber, String sex) {
-        this.login = login;
-        this.pass = pass;
-        this.email = email;
-        this.phoneNimber = phoneNimber;
+    public User(String username, String sex) {
+        this.username = username;
         this.sex = sex;
-        this.userBooks = new ArrayList<>();
     }
 
     public int getId() {
@@ -65,22 +46,6 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -89,20 +54,12 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAltername() {
+        return altername;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNimber() {
-        return phoneNimber;
-    }
-
-    public void setPhoneNimber(String phoneNimber) {
-        this.phoneNimber = phoneNimber;
+    public void setAltername(String altername) {
+        this.altername = altername;
     }
 
     public String getSex() {
@@ -145,52 +102,11 @@ public class User {
         this.regDate = regDate;
     }
 
-    public List<UsersAddBooks> getUserBooks() {
-        return userBooks;
-    }
-
-    public void setUserBooks(List<UsersAddBooks> userBooks) {
-        this.userBooks = userBooks;
-    }
-
     public boolean isRemove() {
-        return remove;
+        return isRemove;
     }
 
     public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
-
-    public List<Transfer> getTransfersTo() {
-        return transfersTo;
-    }
-
-    public void setTransfersTo(List<Transfer> transfersTo) {
-        this.transfersTo = transfersTo;
-    }
-
-    public List<Transfer> getTransfersFrom() {
-        return transfersFrom;
-    }
-
-    public void setTransfersFrom(List<Transfer> transfersFrom) {
-        this.transfersFrom = transfersFrom;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", pass='" + pass + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNimber='" + phoneNimber + '\'' +
-                ", sex='" + sex + '\'' +
-                ", tips=" + tips +
-                ", rating=" + rating +
-                ", regDate=" + regDate +
-                ", userBooks=" + userBooks +
-                '}';
+        isRemove = remove;
     }
 }

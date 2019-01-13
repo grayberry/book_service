@@ -4,7 +4,7 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/book_service</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
-        <property name="connection.password">root813</property>
+        <property name="connection.password">root</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
 
         <property name="hbm2ddl.auto">update</property>
@@ -15,7 +15,7 @@
         <mapping class="am.dreamteam.bookservice.entities.books.Category"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.books.Book"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.users.User"></mapping>
-        <mapping class="am.dreamteam.bookservice.entities.users.UsersAddBooks"></mapping>
+        <mapping class="am.dreamteam.bookservice.entities.users.UserBooks"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.users.Transfer"></mapping>
     </session-factory>
 </hibernate-configuration>

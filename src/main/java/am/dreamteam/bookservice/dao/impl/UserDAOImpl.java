@@ -2,11 +2,14 @@ package am.dreamteam.bookservice.dao.impl;
 
 import am.dreamteam.bookservice.dao.UserDAO;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 
@@ -36,25 +39,48 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean regUser(User user) {
+    public User regUser(String username, String pass, String email, String phoneNumber, String sex) {
 
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            TypedQuery<User> query = session.createQuery("from User where phone_number=:number or email=:email", User.class);
-            query.setParameter("number", user.getPhoneNimber());
-            query.setParameter("email", user.getEmail());
-            List<User> check = query.getResultList();
-            if(!check.isEmpty()){
-                return false;
+            Query query = session.createQuery("select 1 from users u where u.username = :username");
+            query.setParameter("username", username);
+
+            if(!query.getResultList().isEmpty()) {
+                System.out.println("Username is busy");
+                return null;
             }
 
-            session.beginTransaction();
+            query = session.createQuery("select 1 from login l where l.email = :email");
+            query.setParameter("email", email);
+
+            if(!query.getResultList().isEmpty()) {
+                System.out.println("Email is busy");
+                return null;
+            }
+            
+            query = session.createQuery("select 1 from login l where l.phone_number = :phoneNumber");
+            query.setParameter("phoneNumber", phoneNumber);
+
+            if(!query.getResultList().isEmpty()) {
+                System.out.println("phoneNumber is busy");
+                return null;
+            }
+
+            User user = new User(username, sex);
             session.save(user);
-            session.getTransaction().commit();
-            System.out.println("user is registered");
-            return true;
-        } catch (org.hibernate.exception.ConstraintViolationException e){
+
+            query = session.createQuery("insert into login(user_id, pass, email, phone_number) " +
+                    "values(:userId,:pass,:email,:phone_number");
+
+            query.setParameter("userId", user.getId());
+            query.setParameter("pass", pass);
+            query.setParameter("email", email);
+            query.setParameter("phone_number", phoneNumber);
+
+            return user;
+        } catch (ConstraintViolationException e){
             //e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -82,10 +108,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<UsersAddBooks> getUserBooks(User user) {
+    public List<UserBooks> getUserBooks(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
 
-            TypedQuery<UsersAddBooks> query = session.createQuery("from UsersAddBooks where user_id=:id", UsersAddBooks.class);
+            TypedQuery<UserBooks> query = session.createQuery("from UserBooks where user_id=:id", UserBooks.class);
             query.setParameter("id", user.getId());
             return query.getResultList();
         } catch (Throwable e){
