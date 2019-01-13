@@ -26,12 +26,12 @@ public class Transfer {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
-    private UsersAddBooks usersAddBooks;
+    private UserBooks usersAddBooks;
 
     public Transfer() {
     }
 
-    public Transfer(User userFrom, User userTo, UsersAddBooks usersAddBooks) {
+    public Transfer(User userFrom, User userTo, UserBooks usersAddBooks) {
         this.userFrom = userFrom;
         this.userTo = userTo;
         this.usersAddBooks = usersAddBooks;
@@ -69,11 +69,11 @@ public class Transfer {
         this.userFrom = userFrom;
     }
 
-    public UsersAddBooks getUsersAddBooks() {
+    public UserBooks getUsersAddBooks() {
         return usersAddBooks;
     }
 
-    public void setUsersAddBooks(UsersAddBooks usersAddBooks) {
+    public void setUsersAddBooks(UserBooks usersAddBooks) {
         this.usersAddBooks = usersAddBooks;
     }
 

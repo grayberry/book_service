@@ -4,7 +4,7 @@ import am.dreamteam.bookservice.entities.books.Author;
 import am.dreamteam.bookservice.entities.books.Book;
 import am.dreamteam.bookservice.entities.books.Category;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.TransferService;
 import am.dreamteam.bookservice.service.UserService;
 import am.dreamteam.bookservice.service.impl.*;
@@ -121,7 +121,7 @@ public class Main {
     }
 
     private static void one(){
-       List<UsersAddBooks> usersAddBooks = new UsersAddBooksServiceImpl().getUsersAddBooksList();
+       List<UserBooks> usersAddBooks = new UsersAddBooksServiceImpl().getUsersAddBooksList();
        usersAddBooks.forEach(System.out::println);
     }
 
@@ -151,13 +151,13 @@ public class Main {
             book = new Book(title, language, pageCount, imageRef, description, isbn10, isbn13);
             bookService.addBook(book, authors, categories);
         }
-        UsersAddBooks usersAddBooks = new UsersAddBooks(user, book);
+        UserBooks usersAddBooks = new UserBooks(user, book);
         usersAddBooksService.addUsersAddBooks(usersAddBooks);
     }
 
     public static void three(){
         UserService userService = new UserServiceImpl();
-        List<UsersAddBooks> usersAddBooks = userService.getUsersAddBooks(user);
+        List<UserBooks> usersAddBooks = userService.getUsersAddBooks(user);
         usersAddBooks.forEach(System.out::println);
     }
 
@@ -165,13 +165,13 @@ public class Main {
         UserService userService = new UserServiceImpl();
         TransferService transferService = new TransferServiceImpl();
 
-        User user1 = userService.getUserById(1); //hl@ vor dzerov @Ntrelem user-in
-        List<UsersAddBooks> myBooksList = userService.getUsersAddBooks(user);
+        User user1 = userService.getUserById(20); //hl@ vor dzerov @Ntrelem user-in
+        List<UserBooks> myBooksList = userService.getUsersAddBooks(user);
         if(!forEachBooks(myBooksList)){
             System.out.println("you don't have books for transfer");
             return;
         }
-        List<UsersAddBooks> hisBooksList = userService.getUsersAddBooks(user1);
+        List<UserBooks> hisBooksList = userService.getUsersAddBooks(user1);
         if(!forEachBooks(hisBooksList)){
             System.out.println("user has no books");
             return;
@@ -181,8 +181,8 @@ public class Main {
         System.out.println("choose book id for change");
         int id2 = Integer.valueOf(scanner.nextLine());
 
-        UsersAddBooks usersAddBooks1 = myBooksList.get(id1-1);
-        UsersAddBooks usersAddBooks2 = hisBooksList.get(id2-1);
+        UserBooks usersAddBooks1 = myBooksList.get(id1-1);
+        UserBooks usersAddBooks2 = hisBooksList.get(id2-1);
 
         System.out.print("change book '" + usersAddBooks1.getBook().getTitle() +
                 "' to book '" + usersAddBooks2.getBook().getTitle() + "'?\n Y:");
@@ -193,7 +193,7 @@ public class Main {
         System.out.println("DONE!");
     }
 
-    private static boolean forEachBooks(List<UsersAddBooks> booksList){
+    private static boolean forEachBooks(List<UserBooks> booksList){
         if(!booksList.isEmpty()) {
             System.out.println(booksList.get(0).getUser().getLogin() + " books list");
             for (int i = 0; i < booksList.size(); i++) {

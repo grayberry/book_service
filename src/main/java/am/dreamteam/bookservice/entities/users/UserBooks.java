@@ -4,11 +4,10 @@ import am.dreamteam.bookservice.entities.books.Book;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "users_add_books")
-public class UsersAddBooks {
+@Table(name = "users_books")
+public class UserBooks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,13 +26,10 @@ public class UsersAddBooks {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @OneToMany(mappedBy = "usersAddBooks", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Transfer> transfersBook;
-
-    public UsersAddBooks() {
+    public UserBooks() {
     }
 
-    public UsersAddBooks(User user, Book book) {
+    public UserBooks(User user, Book book) {
         this.user = user;
         this.book = book;
     }
@@ -86,17 +82,9 @@ public class UsersAddBooks {
         this.change = change;
     }
 
-    public List<Transfer> getTransfersBook() {
-        return transfersBook;
-    }
-
-    public void setTransfersBook(List<Transfer> transfersBook) {
-        this.transfersBook = transfersBook;
-    }
-
     @Override
     public String toString() {
-        return "UsersAddBooks{" +
+        return "UserBooks{" +
                 "id=" + id +
                 ", user: " + user.getLogin() +
                 ", uploadDate=" + uploadDate +

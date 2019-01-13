@@ -6,7 +6,7 @@ import am.dreamteam.bookservice.dao.impl.TransferDAOImpl;
 import am.dreamteam.bookservice.dao.impl.UserDAOImpl;
 import am.dreamteam.bookservice.entities.users.Transfer;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.TransferService;
 
 public class TransferServiceImpl implements  TransferService {
@@ -19,7 +19,7 @@ public class TransferServiceImpl implements  TransferService {
     }
 
     @Override
-    public boolean createTransfer(User from, User to, UsersAddBooks fromBook, UsersAddBooks toBook) {
+    public boolean createTransfer(User from, User to, UserBooks fromBook, UserBooks toBook) {
         return transferDAO.createTransfer(from, to, fromBook, toBook);
     }
 

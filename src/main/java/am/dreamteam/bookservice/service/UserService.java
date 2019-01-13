@@ -1,7 +1,7 @@
 package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface UserService {
     User login(String login, String pass);
     boolean regUser(User user);
     List<User> getAllUsersList();
-    List<UsersAddBooks> getUsersAddBooks(User user);
+    List<UserBooks> getUsersAddBooks(User user);
 }

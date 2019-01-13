@@ -1,28 +1,28 @@
 package am.dreamteam.bookservice.service.impl;
 
-import am.dreamteam.bookservice.dao.UsersAddBooksDAO;
-import am.dreamteam.bookservice.dao.impl.UsersAddBooksDAOImpl;
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
+import am.dreamteam.bookservice.dao.UsersBooksDAO;
+import am.dreamteam.bookservice.dao.impl.UsersBooksDAOImpl;
+import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.UsersAddBooksService;
 
 import java.util.List;
 
 public class UsersAddBooksServiceImpl implements UsersAddBooksService {
 
-    UsersAddBooksDAO usersAddBooksDAO = new UsersAddBooksDAOImpl();
+    UsersBooksDAO usersBooksDAO = new UsersBooksDAOImpl();
 
     @Override
-    public UsersAddBooks getUsersAddBooksById(int id) {
-        return usersAddBooksDAO.getUsersAddBooksById(id);
+    public UserBooks getUsersAddBooksById(int id) {
+        return usersBooksDAO.getUsersBooksById(id);
     }
 
     @Override
-    public boolean addUsersAddBooks(UsersAddBooks usersAddBooks) {
-        return usersAddBooksDAO.addUsersAddBooks(usersAddBooks);
+    public boolean addUsersAddBooks(UserBooks usersAddBooks) {
+        return usersBooksDAO.addUsersBooks(usersAddBooks);
     }
 
     @Override
-    public List<UsersAddBooks> getUsersAddBooksList() {
-        return usersAddBooksDAO.getUsersAddBooksList();
+    public List<UserBooks> getUsersAddBooksList() {
+        return usersBooksDAO.getUsersBooksList();
     }
 }

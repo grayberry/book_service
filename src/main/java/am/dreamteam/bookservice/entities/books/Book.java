@@ -1,9 +1,6 @@
 package am.dreamteam.bookservice.entities.books;
 
-import am.dreamteam.bookservice.entities.users.UsersAddBooks;
-
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,9 +32,6 @@ public class Book {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name ="category_id"))
     private Set<Category> categories;
-
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-    private List<UsersAddBooks> usersAddBooks;
 
     public Book() {
     }
@@ -138,14 +132,6 @@ public class Book {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
-    }
-
-    public List<UsersAddBooks> getUsersAddBooks() {
-        return usersAddBooks;
-    }
-
-    public void setUsersAddBooks(List<UsersAddBooks> usersAddBooks) {
-        this.usersAddBooks = usersAddBooks;
     }
 
     @Override
