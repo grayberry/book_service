@@ -18,20 +18,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkUser(String login){
+    public String checkUser(String login){
         return userDAO.checkUser(login);
     }
 
     @Override
     public User login(String login, String pass) {
-        if(userDAO.checkUser(login)){
-            return userDAO.login(login, pass);
+        String loginType;
+        if((loginType = userDAO.checkUser(login)) != null){
+            return userDAO.login(login, pass, loginType);
         }else return null;
     }
 
     @Override
-    public boolean regUser(User user) {
-        return userDAO.regUser(user);
+    public User regUser(String username, String pass, String email, String phoneNumber, String sex) {
+        return userDAO.regUser(username, pass, email, phoneNumber, sex);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserBooks> getUsersAddBooks(User user) {
+    public List<UserBooks> getUsersBooks(User user) {
         return userDAO.getUserBooks(user);
     }
 }

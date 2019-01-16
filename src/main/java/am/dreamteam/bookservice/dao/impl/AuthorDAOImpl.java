@@ -55,7 +55,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         for(String name: fullName){
             if((author = getAuthorByName(name))==null){
                 author = new Author(name);
-                addAuthor(author);
+                //addAuthor(author);
             }
             authors.add(author);
         }

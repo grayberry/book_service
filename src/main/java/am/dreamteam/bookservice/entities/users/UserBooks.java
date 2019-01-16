@@ -86,7 +86,7 @@ public class UserBooks {
     public String toString() {
         return "UserBooks{" +
                 "id=" + id +
-                ", user: " + user.getLogin() +
+                ", user: " + user.getUsername() +
                 ", uploadDate=" + uploadDate +
                 ", book=" + book +
                 '}';

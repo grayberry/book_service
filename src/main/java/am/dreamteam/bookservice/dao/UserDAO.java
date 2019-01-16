@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface UserDAO extends Serializable {
     User getUserById(int id);
-    boolean checkUser(String login);
+    String checkUser(String login);
     User regUser(String username, String pass, String email, String phoneNumber, String sex);
-    User login(String login, String password);
+    User login(String username, String password, String loginType);
     List<User> getAllUsersList();
     List<UserBooks> getUserBooks(User user);
 
