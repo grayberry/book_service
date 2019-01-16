@@ -15,9 +15,9 @@ public class UserBooks {
     @Column(name = "upload_date")
     private Date uploadDate;
     @Column(name = "remove")
-    private boolean remove;
+    private boolean isRemoved;
     @Column(name = "change")
-    private boolean change;
+    private boolean forTransfer;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
@@ -66,20 +66,20 @@ public class UserBooks {
         this.user = user;
     }
 
-    public boolean isRemove() {
-        return remove;
+    public boolean isRemoved() {
+        return isRemoved;
     }
 
-    public void setRemove(boolean remove) {
-        this.remove = remove;
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
     }
 
-    public boolean isChange() {
-        return change;
+    public boolean isForTransfer() {
+        return forTransfer;
     }
 
-    public void setChange(boolean change) {
-        this.change = change;
+    public void setForTransfer(boolean forTransfer) {
+        this.forTransfer = forTransfer;
     }
 
     @Override

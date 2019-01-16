@@ -26,7 +26,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Set<Author> getAuthorsList(String... fullName) {
-        return authorDAO.getAuthorsList(fullName);
+    public Set<Author> getAuthorsSet(String... fullName) {
+        return authorDAO.getAuthorsSet(fullName);
     }
+
 }
