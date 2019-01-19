@@ -5,11 +5,11 @@ import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 
@@ -25,42 +25,57 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean checkUser(String login) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            TypedQuery<User> query = session.createQuery("from User where login=:login", User.class);
-            query.setParameter("login", login);
-            query.getSingleResult();
-            return true;
-        } catch (javax.persistence.NoResultException e){
-          //  e.printStackTrace();
-            return false;
-        }
+    public String checkUser(String login) {
+        String loginType;
+        if(login.contains("@")) {
+            loginType = "email";
+        } else if(login.startsWith("+")) {
+            loginType = "phone_number";
+        } else
+            loginType = "username";
 
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+
+
+            Query query = session.createNativeQuery("select 1 from login where " + loginType + " =?1");
+            query.setParameter(1, login);
+
+            if(query.getSingleResult() == null) {
+                System.out.println(loginType + " is not correct");
+                return null;
+            }
+
+            return loginType;
+        } catch (NoResultException e){
+          //  e.printStackTrace();
+            System.out.println(loginType + " is not correct");
+            return null;
+        }
     }
 
     @Override
     public User regUser(String username, String pass, String email, String phoneNumber, String sex) {
 
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.createQuery("select 1 from users u where u.username = :username");
-            query.setParameter("username", username);
-
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            Query query = session.createNativeQuery("select 1 from users u where u.username = ?1");
+            query.setParameter(1, username);
             if(!query.getResultList().isEmpty()) {
                 System.out.println("Username is busy");
                 return null;
             }
 
-            query = session.createQuery("select 1 from login l where l.email = :email");
-            query.setParameter("email", email);
+            query = session.createNativeQuery("select 1 from login l where l.email = ?1");
+            query.setParameter(1, email);
 
             if(!query.getResultList().isEmpty()) {
                 System.out.println("Email is busy");
                 return null;
             }
-            
-            query = session.createQuery("select 1 from login l where l.phone_number = :phoneNumber");
-            query.setParameter("phoneNumber", phoneNumber);
 
+            query = session.createNativeQuery("select 1 from login l where l.phone_number = ?1");
+            query.setParameter(1, phoneNumber);
             if(!query.getResultList().isEmpty()) {
                 System.out.println("phoneNumber is busy");
                 return null;
@@ -69,29 +84,52 @@ public class UserDAOImpl implements UserDAO {
             User user = new User(username, sex);
             session.save(user);
 
-            query = session.createQuery("insert into login(user_id, pass, email, phone_number) " +
-                    "values(:userId,:pass,:email,:phone_number");
+            tx = session.getTransaction();
+            tx.begin();
+            query = session.createNativeQuery("insert into login(username, pass, email, phone_number) " +
+                    "values(?1,?2,?3,?4)");
 
-            query.setParameter("userId", user.getId());
-            query.setParameter("pass", pass);
-            query.setParameter("email", email);
-            query.setParameter("phone_number", phoneNumber);
+            query.setParameter(1, user.getUsername());
+            query.setParameter(2, pass);
+            query.setParameter(3, email);
+            query.setParameter(4, phoneNumber);
+
+            query.executeUpdate();
+            tx.commit();
 
             return user;
-        } catch (ConstraintViolationException e){
-            //e.printStackTrace();
+        } catch (Throwable e){
+            if(tx != null) {
+                tx.rollback();
+            }
             return null;
+        } finally {
+            session.close();
         }
     }
 
     @Override
-    public User login(String login, String password) {
+    public User login(String login, String password, String loginType) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            TypedQuery<User> query = session.createQuery("from User where login=:login and pass=:pass", User.class);
-            query.setParameter("login", login);
-            query.setParameter("pass", password);
-            return query.getSingleResult();
-        } catch (javax.persistence.NoResultException e){
+
+            loginType = checkUser(login);
+            Query query = session.createNativeQuery("select username from login where " + loginType + " = ?1 and pass = ?2");
+
+            query.setParameter(1, login);
+            query.setParameter(2, password);
+
+            String username;
+            if((username = (String)query.getSingleResult()) == null) {
+                System.out.println("Password is not correct");
+                return null;
+            }
+
+            TypedQuery<User> typedQuery = session.createQuery("from User where username = :username", User.class);
+            typedQuery.setParameter("username", username);
+
+            return typedQuery.getSingleResult();
+
+        } catch (javax.persistence.NoResultException e) {
            // e.printStackTrace();
             return null;
         }

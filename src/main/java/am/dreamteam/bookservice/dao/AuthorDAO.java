@@ -9,5 +9,5 @@ public interface AuthorDAO extends Serializable {
     Author getAuthorById(int id);
     Author getAuthorByName(String name);
     boolean addAuthor(Author author);
-    Set<Author> getAuthorsList(String...fullName);
+    Set<Author> getAuthorsSet(String...fullName);
 }

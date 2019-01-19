@@ -36,7 +36,7 @@ CREATE TABLE desired_books(
 
 CREATE TABLE login(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) on update cascade on delete cascade,
+    username VARCHAR(255) REFERENCES users(username) on update cascade on delete cascade,
     pass VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
     phone_number VARCHAR(255) NOT NULL UNIQUE

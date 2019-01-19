@@ -9,7 +9,7 @@
 
         <property name="hbm2ddl.auto">update</property>
 
-        <property name="show_sql">false</property>
+        <property name="show_sql">true</property>
 
         <mapping class="am.dreamteam.bookservice.entities.books.Author"></mapping>
         <mapping class="am.dreamteam.bookservice.entities.books.Category"></mapping>

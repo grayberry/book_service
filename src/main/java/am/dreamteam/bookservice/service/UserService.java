@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface UserService {
     User getUserById(int id);
-    boolean checkUser(String login);
+    String checkUser(String login);
     User login(String login, String pass);
-    boolean regUser(User user);
+    User regUser(String username, String pass, String email, String phoneNumber, String sex);
     List<User> getAllUsersList();
+<<<<<<< HEAD
     List<UserBooks> getUsersAddBooks(User user);
+=======
+    List<UserBooks> getUsersBooks(User user);
+>>>>>>> 858a129cb3629c80769b762af93ed5133d54ffcf
 }

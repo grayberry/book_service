@@ -49,13 +49,13 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
-    public Set<Author> getAuthorsList(String... fullName) {
+    public Set<Author> getAuthorsSet(String[] authorsNames) {
         Set<Author> authors = new HashSet<>();
         Author author;
-        for(String name: fullName){
+        for(String name: authorsNames){
             if((author = getAuthorByName(name))==null){
                 author = new Author(name);
-                addAuthor(author);
+                //addAuthor(author);
             }
             authors.add(author);
         }
