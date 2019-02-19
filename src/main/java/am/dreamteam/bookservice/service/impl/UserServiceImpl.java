@@ -1,51 +1,120 @@
 package am.dreamteam.bookservice.service.impl;
 
-import am.dreamteam.bookservice.dao.UserDAO;
-import am.dreamteam.bookservice.dao.impl.UserDAOImpl;
+import am.dreamteam.bookservice.domain.RegisterRequest;
+import am.dreamteam.bookservice.domain.Role;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UserBooks;
+import am.dreamteam.bookservice.repositories.UsersRepository;
 import am.dreamteam.bookservice.service.UserService;
+import am.dreamteam.bookservice.util.MailSendHelper;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
+
+@Service
 public class UserServiceImpl implements UserService {
 
-    UserDAO userDAO = new UserDAOImpl();
+    private PasswordEncoder passwordEncoder;
+    private UsersRepository usersRepository;
+    private MailSendHelper mailSendHelper;
 
-    @Override
-    public User getUserById(int id) {
-        return userDAO.getUserById(id);
+    public UserServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder,
+                           MailSendHelper mailSendHelper) {
+        this.passwordEncoder = passwordEncoder;
+        this.usersRepository = usersRepository;
+        this.mailSendHelper = mailSendHelper;
     }
 
     @Override
-    public String checkUser(String login){
-        return userDAO.checkUser(login);
+    public User findUserById(int id) {
+        return usersRepository.findById(id).get();
     }
 
     @Override
-    public User login(String login, String pass) {
-        String loginType;
-        if((loginType = userDAO.checkUser(login)) != null){
-            return userDAO.login(login, pass, loginType);
-        }else return null;
+    public int registerUser(RegisterRequest request) {
+        User user = new User();
+        user.setUsername(request.getUsername().toLowerCase());
+        user.setEmail(request.getEmail().toLowerCase());
+
+        if(findByUsername(user.getUsername())!=null){
+            return -1;
+        }
+        if(findByEmail(user.getEmail())!=null){
+            return 0;
+        }
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setSex(request.getSex());
+        user.setPhoto("/images/avatars/" + request.getSex() + ".png");
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
+        user.setActive(false);
+        user.setActivationCode(UUID.randomUUID().toString());
+        save(user);
+        mailSendHelper.send(user);
+        return 1;
+    }
+
+    public void disableUser(Integer id) {
+        User user = findUserById(id);
+        user.setActive(false);
+        save(user);
     }
 
     @Override
-    public User regUser(String username, String pass, String email, String phoneNumber, String sex) {
-        return userDAO.regUser(username, pass, email, phoneNumber, sex);
+    public User enableUser(User user) {
+        User toEnable = findByUsername(user.getUsername());
+        toEnable.setActive(true);
+        usersRepository.save(toEnable);
+        return toEnable;
     }
 
     @Override
-    public List<User> getAllUsersList() {
-        return userDAO.getAllUsersList();
+    public List<User> findAllUsers() {
+        return usersRepository.findAll();
     }
 
     @Override
-<<<<<<< HEAD
-    public List<UserBooks> getUsersAddBooks(User user) {
-=======
-    public List<UserBooks> getUsersBooks(User user) {
->>>>>>> 858a129cb3629c80769b762af93ed5133d54ffcf
-        return userDAO.getUserBooks(user);
+    public User findByUsername(String username) {
+        return usersRepository.findUserByUsername(username);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return usersRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public User save(User user){
+       return usersRepository.save(user);
+    }
+
+    @Override
+    public User findUserByVerificationCode(String code) {
+        return usersRepository.findUserByActivationCode(code);
+    }
+
+/*    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if(findByEmail(username)!=null){
+            username = findByEmail(username).getUsername();
+        }
+        User user = findByUsername(username);
+        try {
+            org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(
+                    user.getUsername(),
+                    user.getPassword(),
+                    Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")
+                    ));
+
+
+            return u;
+        } catch (UsernameNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }*/
 }

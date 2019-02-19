@@ -1,33 +1,42 @@
 package am.dreamteam.bookservice.service.impl;
 
-import am.dreamteam.bookservice.dao.AuthorDAO;
-import am.dreamteam.bookservice.dao.impl.AuthorDAOImpl;
 import am.dreamteam.bookservice.entities.books.Author;
+import am.dreamteam.bookservice.repositories.AuthorsRepository;
 import am.dreamteam.bookservice.service.AuthorService;
+import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Service
 public class AuthorServiceImpl implements AuthorService {
 
-    AuthorDAO authorDAO = new AuthorDAOImpl();
-    @Override
-    public Author getAuthorById(int id) {
-        return authorDAO.getAuthorById(id);
+    private AuthorsRepository authorsRepository;
+
+    public AuthorServiceImpl(AuthorsRepository authorsRepository) {
+        this.authorsRepository = authorsRepository;
     }
 
     @Override
-    public Author getAuthorByName(String name) {
-        return authorDAO.getAuthorByName(name);
+    public void addAuthors(Set<Author> authors) {
+        for(Author author: authors){
+            authorsRepository.save(author);
+        }
     }
 
     @Override
-    public boolean addAuthor(Author author) {
-        return authorDAO.addAuthor(author);
-    }
+    public Set<Author> getAuthorsSet(List list) {
+        Set<Author> authors = new HashSet<>();
+        Author author;
+        for (Object a :list){
+            if((author = authorsRepository.findAuthorByFullName(a.toString()))==null){
+                author = new Author(a.toString());
+                authorsRepository.save(author);
+            }
+            authors.add(author);
+        }
+        return authors;
 
-    @Override
-    public Set<Author> getAuthorsSet(String... fullName) {
-        return authorDAO.getAuthorsSet(fullName);
     }
-
 }

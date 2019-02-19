@@ -1,31 +1,35 @@
 package am.dreamteam.bookservice.service.impl;
 
-import am.dreamteam.bookservice.dao.BookDAO;
-import am.dreamteam.bookservice.dao.impl.BookDAOImpl;
-import am.dreamteam.bookservice.entities.books.Author;
 import am.dreamteam.bookservice.entities.books.Book;
-import am.dreamteam.bookservice.entities.books.Category;
+import am.dreamteam.bookservice.repositories.BooksRepository;
 import am.dreamteam.bookservice.service.BookService;
+import org.springframework.stereotype.Service;
 
-import java.util.Set;
-
+import java.util.List;
+@Service
 public class BookServiceImpl implements BookService {
 
-    BookDAO bookDAO = new BookDAOImpl();
+    private BooksRepository booksRepository;
 
-    @Override
-    public Book getBookById(int id) {
-        return bookDAO.getBookById(id);
+    public BookServiceImpl(BooksRepository booksRepository) {
+        this.booksRepository = booksRepository;
     }
 
     @Override
-    public Book checkBookUnique(String title, String language, Set<Author> authors) {
-        return bookDAO.checkBookUnique(title, language, authors);
-    }
+    public Book checkBookUnique(Book book) {
 
-    @Override
-    public boolean addBook(Book book, Set<Author> authors, Set<Category> categories) {
-
-        return bookDAO.addBook(book, authors, categories);
+        List<Book> books = booksRepository.findAllByTitleAndLanguage(book.getTitle(), book.getLanguage());
+        boolean find = false;
+        for(Book book1 : books){
+            if(book1.getAuthors().equals(book.getAuthors())){
+                book = book1;
+                find = true;
+                break;
+            }
+        }
+        if(!find){
+            booksRepository.save(book);
+        }
+        return book;
     }
 }

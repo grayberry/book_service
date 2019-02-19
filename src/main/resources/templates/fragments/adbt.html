@@ -1,0 +1,19 @@
+<div th:fragment="adbt">
+
+<div id="response">
+    <pre></pre>
+</div>
+<button id="addBook">Add book</button>
+<div id="bookForm"></div>
+<table >
+	<tbody id="chosenBooks"></tbody>
+</table>
+<div id="submitForm">
+<input id="token"
+  type="hidden"
+  th:name="${_csrf.parameterName}"
+  th:value="${_csrf.token}" />
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script th:src="@{/scripts/addbooks.js}"></script>
+</div>

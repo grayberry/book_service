@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{/styles/login.css}"/>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"></script>
+    <link th:href="@{/styles/layout.css}" rel="stylesheet" >
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <div>
+      <div class="login-page">
+        <div class="form">
+          <h2>Sign Up</h2>
+          <b th:text="${message}"></b>
+          <form class="login-form" method="post" th:action="@{/register}">
+            <p>
+              <label for="email" class="floatLabel">Email</label>
+              <input id="email" name="email" type="email" required/>
+            </p>
+            <p>
+              <label for="username" class="floatLabel">Username</label>
+              <input id="username" name="username" type="text" required/>
+            </p>
+            <p>
+              <label for="password" class="floatLabel">Password</label>
+              <input id="password" name="password" type="password" required/>
+            </p>
+            <p>
+              <label for="confirm_password" class="floatLabel">Confirm Password</label>
+              <input id="confirm_password" name="confirm_password" type="password" required/>
+            </p>
+            <p>
+              <label for="male"  class="lab">Male
+              <input type="radio" name="sex" value="male" required/>
+              </label>
+              <label for="female"  class="lab">Female
+              <input type="radio" name="sex" value="female">
+              </label>
+              <label for="other"  class="lab">Other
+              <input type="radio" name="sex" value="other">
+              </label>
+            </p>
+            <p>
+              <input type="submit" value="Create My Account" id="submit"/>
+            </p>
+            <p class="message">Already have an account? <a th:href="@{/login}">Sign in</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script th:src="@{/scripts/register.js}"></script>
+  </body>
+</html>

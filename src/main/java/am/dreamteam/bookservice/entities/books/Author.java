@@ -8,22 +8,22 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "full_name")
+    private Integer id;
+    @Column(name = "full_name", nullable = false, columnDefinition = "VARCHAR(255)")
     private String fullName;
 
     public Author() {
     }
 
     public Author(String fullName) {
-        this.fullName = fullName;
+        this.fullName = fullName.replaceAll("\"","'");
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,11 +32,11 @@ public class Author {
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        this.fullName = fullName.replaceAll("\"","'");
     }
 
     @Override
     public String toString() {
-        return "'" + fullName + "'";
+        return "\"" + fullName + "\"";
     }
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <title>BookBarter | Dialogs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link th:href="@{/styles/layout.css}" rel="stylesheet" />
+    <link th:href="@{/styles/chat.css}" rel="stylesheet" />
+  </head>
+  <body id="top">
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    r
+    <div class="wrapper row3">
+      <main class="hoc container clear">
+        <h2 th:text="${page}"></h2>
+        <!-- main body -->
+        <div id="userTo" th:value="${username}" th:text="${username}"></div>
+        <div class="content">
+          <div class="dialogs_div">
+            <!--/*@thymesVar id="dialogs" type="am.dreamteam.bookservice.entities.messages.Dialog"*/-->
+            <th:block th:each="dialog : ${dialogs}">
+              <a th:href="@{${locate}(u=(${dialog.userFrom.username}))}">
+                <div class="dialog_div"  th:text="${dialog.userFrom.username}">
+                </div>
+              </a>
+            </th:block>
+          </div>
+          <section id="un-chat">
+            <ul id="chat" th:name="${username}">
+              <!-- MESSAGES -->
+              <!--/*@thymesVar id="m" type="am.dreamteam.bookservice.entities.messages.Message"*/-->
+              <th:block th:each="m : ${messages}">
+                <li th:if="${m.getDialog().getUserFrom().username!=username}" class="me">
+                  <div th:text="${m.content}"></div>
+                </li>
+                <li th:if="${m.getDialog().getUserFrom().username==username}">
+                  <div  th:text="${m.content}"></div>
+                </li>
+              </th:block>
+              <!-- TRANSFERS -->
+              <!--/*@thymesVar id="transfer" type="am.dreamteam.bookservice.entities.users.Transfer"*/-->
+              <th:block th:each="transfer : ${transfers}">
+                <li th:if="${transfer.userTo.username==username}" class="me" >
+                  <div th:data-book-id="${transfer.userBooks.id}">
+                    <img class="transfer_book" th:src="${transfer.userBooks.book.imageRef}">
+                    <b th:text="${transfer.userBooks.book.title}"></b>
+                  </div>
+                </li>
+                <li th:if="${transfer.userTo.username!=username}"  >
+                  <div th:data-book-id="${transfer.userBooks.id}">
+                    <img class="transfer_book" th:src="${transfer.userBooks.book.ImageRef}">
+                    <b th:text="${transfer.userBooks.book.title}"></b>
+                    <input class="submit-class"  type="submit" value="change">
+                    <input class="cancel-class" type="submit" value="cancel" >
+                  </div>
+                </li>
+              </th:block>
+            </ul>
+            <div th:if="${print}">
+              <input id="txtMessage" type="text" placeholder="Type your message" autofocus/>
+              <input id="send" type="button" value="send">
+            </div>
+          </section>
+        </div>
+        <!-- ################################################################################################ -->
+        <!-- / main body -->
+        <div class="clear"></div>
+      </main>
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- FOOTER -->
+    <!-- ################################################################################################ -->
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+    <!-- JAVASCRIPTS -->
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+    <script th:src="@{/scripts/jquery.backtotop.js}"></script>
+    <script th:src="@{/scripts/jquery.mobilemenu.js}"></script>
+    <script th:src="@{/scripts/chat.js}"></script>
+    <!-- IE9 Placeholder Support -->
+    <script th:src="@{/scripts/jquery.placeholder.min.js}"></script>
+    <!-- / IE9 Placeholder Support -->
+  </body>
+</html>

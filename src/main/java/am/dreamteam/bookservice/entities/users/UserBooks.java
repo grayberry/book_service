@@ -10,14 +10,14 @@ import java.sql.Date;
 public class UserBooks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @CreationTimestamp
-    @Column(name = "upload_date")
+    @Column(name = "upload_date", nullable = false, columnDefinition = "DATE")
     private Date uploadDate;
-    @Column(name = "remove")
-    private boolean isRemoved;
-    @Column(name = "change")
-    private boolean forTransfer;
+    @Column(name = "is_removed", nullable = false, columnDefinition = "BOOLEAN")
+    private Boolean isRemoved = false;
+    @Column(name = "for_transfer", nullable = false, columnDefinition = "BOOLEAN")
+    private Boolean forTransfer = true;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,11 +34,11 @@ public class UserBooks {
         this.book = book;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,32 +66,21 @@ public class UserBooks {
         this.user = user;
     }
 
-    public boolean isRemoved() {
+    public Boolean isRemoved() {
         return isRemoved;
     }
 
-    public void setRemoved(boolean removed) {
+    public void setRemoved(Boolean removed) {
         isRemoved = removed;
     }
 
-<<<<<<< HEAD:src/main/java/am/dreamteam/bookservice/entities/users/UserBooks.java
-=======
-    public boolean isForTransfer() {
-        return forTransfer;
-    }
-
-    public void setForTransfer(boolean forTransfer) {
-        this.forTransfer = forTransfer;
-    }
-
->>>>>>> 858a129cb3629c80769b762af93ed5133d54ffcf:src/main/java/am/dreamteam/bookservice/entities/users/UserBooks.java
     @Override
     public String toString() {
-        return "UserBooks{" +
-                "id=" + id +
-                ", user: " + user.getUsername() +
-                ", uploadDate=" + uploadDate +
-                ", book=" + book +
-                '}';
+        return "{" +
+                "\"id\" : \"" + id +
+                "\", \"user\" : \"" + user.getUsername() +
+                "\", \"uploadDate\" : \"" + uploadDate +
+                "\", \"book\" : " + book +
+                "}";
     }
 }

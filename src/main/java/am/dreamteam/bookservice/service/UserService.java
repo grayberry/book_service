@@ -1,19 +1,20 @@
 package am.dreamteam.bookservice.service;
 
+import am.dreamteam.bookservice.domain.RegisterRequest;
 import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UserBooks;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
-    User getUserById(int id);
-    String checkUser(String login);
-    User login(String login, String pass);
-    User regUser(String username, String pass, String email, String phoneNumber, String sex);
-    List<User> getAllUsersList();
-<<<<<<< HEAD
-    List<UserBooks> getUsersAddBooks(User user);
-=======
-    List<UserBooks> getUsersBooks(User user);
->>>>>>> 858a129cb3629c80769b762af93ed5133d54ffcf
+public interface UserService  {
+    User findUserById(int id);
+    int registerUser(RegisterRequest request);
+    List<User> findAllUsers();
+    User findByUsername(String username);
+    User findByEmail(String email);
+    User save(User user);
+    User findUserByVerificationCode(String code);
+    void disableUser(Integer id);
+    User enableUser(User user);
 }

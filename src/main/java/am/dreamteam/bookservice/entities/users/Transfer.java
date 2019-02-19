@@ -10,11 +10,13 @@ import java.sql.Date;
 public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @CreationTimestamp
-    @Column(name = "transfer_date")
+    @Column(name = "transfer_date", columnDefinition = "DATE")
     private Date date;
+    @Column(name = "done")
+    private Boolean done = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "from_id")
@@ -26,7 +28,7 @@ public class Transfer {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
-    private UserBooks usersAddBooks;
+    private UserBooks userBooks;
 
     public Transfer() {
     }
@@ -34,14 +36,14 @@ public class Transfer {
     public Transfer(User userFrom, User userTo, UserBooks usersAddBooks) {
         this.userFrom = userFrom;
         this.userTo = userTo;
-        this.usersAddBooks = usersAddBooks;
+        this.userBooks = usersAddBooks;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -69,12 +71,20 @@ public class Transfer {
         this.userFrom = userFrom;
     }
 
-    public UserBooks getUsersAddBooks() {
-        return usersAddBooks;
+    public UserBooks getUserBooks() {
+        return userBooks;
     }
 
-    public void setUsersAddBooks(UserBooks usersAddBooks) {
-        this.usersAddBooks = usersAddBooks;
+    public void setUserBooks(UserBooks userBooks) {
+        this.userBooks = userBooks;
+    }
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
     }
 
     @Override
@@ -84,7 +94,7 @@ public class Transfer {
                 ", date=" + date +
                 ", userTo=" + userTo +
                 ", userFrom=" + userFrom +
-                ", usersAddBooks=" + usersAddBooks +
+                ", userBooks=" + userBooks +
                 '}';
     }
 }

@@ -1,11 +1,13 @@
 package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.users.Transfer;
-import am.dreamteam.bookservice.entities.users.User;
-import am.dreamteam.bookservice.entities.users.UserBooks;
+
+import java.util.List;
 
 public interface TransferService {
-    Transfer getTransferById(int id);
-    boolean createTransfer(User from, User to, UserBooks fromBook, UserBooks toBook);
-    User getUserForTransfer(int id);
+    void createOneTransfer(String userFrom, String userTo, Integer bookId);
+    List<Transfer> findAllByUserFromAndUserToAndDone(String userFrom, String userTo, Boolean done);
+    boolean findTransfer(String userFrom, String userTo, Integer bookId);
+    void cancelTransfer(String userFrom, String userTo, Integer bookId);
+    void transferBooks(String userFrom, String userTo, Integer bookFrom, Integer bookTo);
 }

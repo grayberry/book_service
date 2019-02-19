@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <title>BookBarter</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link th:href="@{/styles/layout.css}" rel="stylesheet">
+    <link th:href="@{/styles/owl.carousel.css}" rel="stylesheet">
+    <link th:href="@{/styles/owl.theme.css}" rel="stylesheet">
+  </head>
+  <body id="top">
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="wrapper row3">
+      <main class="hoc container clear">
+        <!-- main body -->
+        <!-- ################################################################################################ -->
+        <div class="center btmspace-40 topspace-20">
+          <h2 class="heading font-x3" style="margin-bottom: 5px">Welcome to the BookBarter</h2>
+          <p class="nospace" style="font-family: 'Times New Roman'">Follow to steps below for making a successful book-transfers</p>
+        </div>
+        <div class="group center">
+          <article class="one_quarter">
+            <!--<i class="icon fa fa-balance-scale"></i>--><img th:src="@{/images/search.png}" style="max-width: 100px; margin-bottom: 25px "/>
+            <h4 class="font-x1 uppercase">Step 1</h4>
+            <p>Look for the book, you want to exchange with</p>
+          </article>
+          <article class="one_quarter">
+            <!--<i class="icon fa fa-bank"></i>--><img th:src="@{/images/notebook.png}" style="max-width: 100px; margin-bottom: 25px "/>
+            <h4 class="font-x1 uppercase">Step 2</h4>
+            <p>Found it? Send a request to the owner</p>
+          </article>
+          <article class="one_quarter">
+            <!--<i class="icon fa fa-plane"></i>--><img th:src="@{/images/users.png}" style="max-width: 100px; margin-bottom: 25px "/>
+            <h4 class="font-x1 uppercase">Step 3</h4>
+            <p>Come to an agreement about the deal</p>
+          </article>
+          <article class="one_quarter">
+            <!--i class="icon fa fa-graduation-cap"></i>--><img th:src="@{/images/map-location.png}" style="max-width: 100px; margin-bottom: 25px "/>
+            <h4 class="font-x1 uppercase">Step 4</h4>
+            <p>Make an appointment and exchange books</p>
+          </article>
+        </div>
+        <!-- ################################################################################################ -->
+        <!-- / main body -->
+        <div class="clear"></div>
+      </main>
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div class="wrapper row4">
+      <div class="hoc container clear">
+        <!-- ################################################################################################ -->
+        <ul class="nospace elements">
+          <!--/*@thymesVar id="userbook" type="am.dreamteam.bookservice.entities.users.UserBooks"*/-->
+          <li th:each="userbook : ${books}" class="one_third">
+            <article>
+              <figure>
+                <img class="index_img" th:src="${userbook.book.imageRef}" alt="">
+                <a  th:href="@{/books(id=(${userbook.id}))}">
+                  <figcaption>
+                    <p class="description_limit"  th:text="${userbook.book.description}" ></p>
+                  </figcaption>
+                </a>
+              </figure>
+              <div class="txtwrap">
+                <p th:text="${userbook.book.title}" class="heading title_limit"></p>
+              </div>
+            </article>
+          </li>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <!-- <div th:replace="fragments/partners :: partners">
+    </div> -->
+    <div th:replace="fragments/footer :: footer">
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+    <!-- JAVASCRIPTS -->
+    <script th:src="@{//code.jquery.com/jquery-1.10.2.js}"></script>
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+    <script th:src="@{/scripts/jquery.backtotop.js}"></script>
+    <script th:src="@{/scripts/jquery.mobilemenu.js}"></script>
+    <script th:src="@{/scripts/main.js}"></script>
+    <script th:src="@{/scripts/owl.carousel.min.js}"></script>
+    <!-- IE9 Placeholder Support -->
+    <script th:src="@{/scripts/jquery.placeholder.min.js}"></script>
+    <!-- / IE9 Placeholder Support -->
+  </body>
+</html>

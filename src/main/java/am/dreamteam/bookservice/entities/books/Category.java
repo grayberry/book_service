@@ -8,22 +8,22 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "category")
+    private Integer id;
+    @Column(name = "category", nullable = false, columnDefinition = "VARCHAR(255)")
     private String category;
 
     public Category() {
     }
 
     public Category(String category) {
-        this.category = category;
+        this.category = category.replaceAll("\"","'");
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,11 +32,11 @@ public class Category {
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category = category.replaceAll("\"","'");
     }
 
     @Override
     public String toString() {
-        return "'" + category + "'";
+        return "\"" + category + "\"";
     }
 }

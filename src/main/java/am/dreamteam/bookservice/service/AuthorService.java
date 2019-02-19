@@ -2,12 +2,10 @@ package am.dreamteam.bookservice.service;
 
 import am.dreamteam.bookservice.entities.books.Author;
 
+import java.util.List;
 import java.util.Set;
 
 public interface AuthorService {
-    Author getAuthorById(int id);
-    Author getAuthorByName(String name);
-    boolean addAuthor(Author author);
-    Set<Author> getAuthorsSet(String...fullName);
+    void addAuthors(Set<Author> authors);
+    Set<Author> getAuthorsSet(List list);
 }
-

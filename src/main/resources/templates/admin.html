@@ -1,0 +1,138 @@
+<html ng-app="bookApp" xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <!--<link rel="stylesheet" th:href="@{/styles/layout.css}">-->
+    <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/styles/style.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/styles/mdb.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-resource.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.6/angular-messages.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/scripts/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/crud.js}"></script>
+    <script>
+      $(document).ready(function () {
+
+          $("input").keyup(function (event) {
+              console.log("ng-invalid");
+              if ($(this).hasClass("ng-invalid")) {
+                  $(this).addClass("is-invalid");
+              } else {
+                  $(this).removeClass("is-invalid")
+              }
+          });
+
+          $("#save").submit(function () {
+              $("#edit-modal").modal('toggle');
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div ng-controller="UsersController" class="container">
+      <div class="col-md-offset-2">
+        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="th-sm">Id</th>
+              <th class="th-sm">Username</th>
+              <th class="th-sm">Email</th>
+              <th class="th-sm">Altername</th>
+              <th class="th-sm">Reg. date</th>
+              <th class="th-sm">Sex</th>
+              <th class="th-sm">Enabled</th>
+              <th class="th-sm"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users">
+              <th scope="row">{{user.id}}</th>
+              <td>{{user.username}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.altername}}</td>
+              <td>{{user.regDate}}</td>
+              <td>{{user.sex}}</td>
+              <td>{{user.active}}</td>
+              <td>
+                <a type="button" class="btn btn-info" ng-click="update(user)" data-toggle="modal" data-target="#edit-modal">Edit</a>
+                <a type="button" ng-show="user.active" class="btn btn-danger" ng-click="delete(user)">Delete</a>
+                <a type="button" ng-show="!user.active" class="btn btn-success" ng-click="enable(user)">Enable</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" th:novalidate>
+            <form name="editForm">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Edit user</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder={{user.username}} class="form-control" name="username"
+                    ng-model="user.username"
+                    ng-minlength="3"
+                    ng-maxlength="20"
+                    required>
+                  <div class="invalid-feedback" ng-show="editForm.username.$error.minlength">Too short!</div>
+                  <div class="invalid-feedback" ng-show="editForm.username.$error.maxlength">Too long!</div>
+                  <div class="invalid-feedback" ng-show="editForm.username.$error.required">This field is required.</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" placeholder={{user.email}} class="form-control" name="email" ng-model="user.email" required>
+                  <div class="invalid-feedback" ng-show="editForm.email.$error.required">This field is required.</div>
+                  <div class="invalid-feedback" ng-show="editForm.email.$error.email">Invalid email format.</div>
+                </div>
+                <!--<div class="invalid-feedback" ng-show="edit-form.email.$error.required">This field is required</div>-->
+              </div>
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Altername</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder={{user.altername}} class="form-control" name="altername" ng-model="user.altername">
+                </div>
+              </div>
+              <div class="form-row align-items-center">
+                <div class="col-sm-3 offset-1 my-1">
+                  <label class="mr-sm-2" for="inlineFormCustomSelect">Sex</label>
+                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="sex" ng-model="user.sex">
+                    <option ng-repeat="option in options" ng-value="option">{{option}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="pull-right">
+                    <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="save" ng-disabled="editForm.$invalid" type="submit" class="btn btn-primary" ng-click="edit()">Save</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.row -->
+        </div>
+      </div>
+    </div>
+    <!--<div th:replace="fragments/footer :: footer">-->
+    </div>
+  </body>
+</html>

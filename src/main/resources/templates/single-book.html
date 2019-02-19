@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <title>BookInfo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet" >
+    <link th:href="@{/styles/layout.css}" rel="stylesheet" >
+  </head>
+  <body id="top">
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="wrapper row3">
+      <div id="breadcrumb" class="hoc clear">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Lorem</a></li>
+          <li><a href="#">Ipsum</a></li>
+          <li><a href="#">Dolor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrapper row3">
+      <main class="hoc container clear">
+        <!-- main body -->
+        <div th:replace="fragments/left_sidebar :: left_sidebar">
+        </div>
+        <div class="content three_quarter">
+          <!--/*@thymesVar id="book" type="am.dreamteam.bookservice.entities.users.UserBooks"*/-->
+          <div id="bookid" class="booktitle col-sm-12" th:data-book-id="${book.id}" th:data-user-to="${book.user.username}" >
+            <h1 th:text="${book.book.title}"></h1>
+          </div>
+          <div class="row">
+            <div class="pic col-sm-4">
+              <img th:src="@{${book.book.imageRef}}"/>
+            </div>
+            <div class="infotitles">
+              <p><b class="heading">Authors</b>: <b>[[${book.book.authors}]]</b> </p>
+              <p><b class="heading">Categories</b>: <b>[[${book.book.categories}]]</b> </p>
+              <p><b class="heading">Language</b>: <b>[[${book.book.language}]]</b> </p>
+              <p><b class="heading">Pages</b>: <b>[[${book.book.pageCount}]]</b> </p>
+              <p><b class="heading">Added</b>: <b><a th:href="@{'/user/' + ${book.user.username}}" th:text="${book.user.username}" > </a> </b> </p>
+              <div sec:authorize="isAuthenticated()">
+                <input th:if="${user!=book.user.username}" id="sendbook" type="submit" value="CHANGE">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h2>Description</h2>
+          <p th:text="${book.book.description}"></p>
+        </div>
+        <!-- / main body -->
+        <div class="clear"></div>
+      </main>
+    </div>
+    <div th:replace="fragments/footer :: footer">
+    </div>
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+    <!-- JAVASCRIPTS -->
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+    <script th:src="@{/scripts/jquery.backtotop.js}"></script>
+    <script th:src="@{/scripts/jquery.mobilemenu.js}"></script>
+    <!-- IE9 Placeholder Support -->
+    <script th:src="@{/scripts/jquery.placeholder.min.js}"></script>
+    <script th:src="@{/scripts/transfer.js}"></script>
+    <!-- / IE9 Placeholder Support -->
+  </body>
+</html>

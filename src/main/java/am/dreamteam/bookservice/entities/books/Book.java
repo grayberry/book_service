@@ -8,22 +8,22 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "title", nullable = false, columnDefinition = "VARCHAR(255)")
     private String title;
     @Column(name = "language", nullable = false, columnDefinition = "VARCHAR(255")
     private String language;
-    @Column(name = "page_count")
-    private int pageCount;
-    @Column(name = "image_ref")
+    @Column(name = "page_count", columnDefinition = "INTEGER")
+    private Integer pageCount;
+    @Column(name = "image_ref", columnDefinition = "VARCHAR(1000)")
     private String imageRef;
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    @Column(name = "rating", nullable = false, columnDefinition = "integer default 0")
-    private int rating;
-    @Column(name = "isbn_10")
+    @Column(name = "rating", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private Integer rating;
+    @Column(name = "isbn_10", columnDefinition = "VARCHAR(255)")
     private String isbn10;
-    @Column(name = "isbn_13")
+    @Column(name = "isbn_13", columnDefinition = "VARCHAR(255)")
     private String isbn13;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -36,21 +36,21 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String language, int pageCount, String imageRef, String description, String isbn10, String isbn13) {
-        this.title = title;
+    public Book(String title, String language, Integer pageCount, String imageRef, String description, String isbn10, String isbn13) {
+        this.title = title.replaceAll("\"","'");
         this.language = language;
         this.pageCount = pageCount;
         this.imageRef = imageRef;
-        this.description = description;
+        this.description = description.replaceAll("\"","'");
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.replaceAll("\"","'");
     }
 
     public String getLanguage() {
@@ -70,11 +70,11 @@ public class Book {
         this.language = language;
     }
 
-    public int getPageCount() {
+    public Integer getPageCount() {
         return pageCount;
     }
 
-    public void setPageCount(int pageCount) {
+    public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
     }
 
@@ -91,14 +91,14 @@ public class Book {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.replaceAll("\"","'");
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -136,18 +136,18 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", authors=" + authors +
-                ", categories=" + categories +
-                ", language='" + language + '\'' +
-                ", pageCount=" + pageCount +
-                ", imageRef='" + imageRef + '\'' +
-                ", description='" + description + '\'' +
-                ", rating=" + rating +
-                ", isbn10='" + isbn10 + '\'' +
-                ", isbn13='" + isbn13 + '\'' +
-                '}';
+        return "{" +
+                "\"id\" : \"" + id +
+                "\", \"title\" : \"" + title +
+                "\", \"authors\" : " + authors +
+                ", \"categories\" : " + categories +
+                ", \"language\" : \"" + language +
+                "\", \"pageCount\" : \"" + pageCount +
+                "\", \"imageRef\" : \"" + imageRef +
+                "\", \"description\" : \"" + description +
+                "\", \"rating\" : \"" + rating +
+                "\", \"isbn10\" : \"" + isbn10 +
+                "\", \"isbn13\" : \"" + isbn13 +
+                "\"}";
     }
 }
