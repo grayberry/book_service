@@ -70,7 +70,9 @@ function confirmPasswordEvent() {
 function enableSubmitEvent() {
     $("#submit").prop("disabled", !canSubmit());
     if(canSubmit()){
-        $("#submit").css("background", "green");
+        $("#submit").css("background", "#9bff9b");
+    }else{
+        $("#submit").css("background", "f2f2f2");
     }
 }
 

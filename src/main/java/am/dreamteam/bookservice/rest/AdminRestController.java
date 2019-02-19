@@ -18,7 +18,7 @@ public class AdminRestController {
         this.userService = userService;
     }
 
-//    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    //    @RequestMapping(value = "/user", method = RequestMethod.GET)
 //    public ResponseEntity<User> fetchAllUsers() {
 //        return new ResponseEntity<>(userService.getUserByUsername(getPrincipal()), HttpStatus.OK);
 //    }
@@ -41,12 +41,6 @@ public class AdminRestController {
         return new ResponseEntity<>(current, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/enable", method = RequestMethod.PUT)
-    public ResponseEntity<User> enableUser(@RequestBody User user) {
-        user = userService.enableUser(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/users")
     public ResponseEntity<List<User>> getUsersList() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
@@ -54,10 +48,15 @@ public class AdminRestController {
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable Integer id) {
-        userService.disableUser(id);
+
+        User user = userService.findUserById(id);
+        if(user.isActive())
+            userService.disableUser(id);
+        else
+            userService.enableUser(id);
     }
 
-    public User setFields(User current, User edited) {
+    private User setFields(User current, User edited) {
         System.out.println(edited.getUsername());
         if(edited.getUsername() != null) {
             current.setUsername(edited.getUsername());
