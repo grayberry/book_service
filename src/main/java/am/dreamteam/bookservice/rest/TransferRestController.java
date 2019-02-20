@@ -1,5 +1,6 @@
 package am.dreamteam.bookservice.rest;
 
+import am.dreamteam.bookservice.entities.users.Transfer;
 import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.TransferService;
 import am.dreamteam.bookservice.service.UserBooksService;
@@ -13,6 +14,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/transfers")
@@ -112,5 +115,21 @@ public class TransferRestController {
         transferService.transferBooks(principal.getName(), json.optString("user"), json.getInt("mybook"), json.getInt("userBook"));
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/c")
+    public ResponseEntity<List<String>> c(@AuthenticationPrincipal Principal principal){
+        if(principal==null){
+            return ResponseEntity.ok().build();
+        }
+
+        List<Transfer> transfers = transferService.findAllByUserToAndDone(principal.getName(), false);
+        List<String> users = new ArrayList<>();
+
+        for(Transfer transfer : transfers){
+            users.add(transfer.getUserFrom().getUsername());
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+
     }
 }

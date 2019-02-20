@@ -171,8 +171,9 @@ function send(message) {
             let $li = $('<li/>').addClass('me');
             let $div = $('<div/>').text(message);
             let $chat = $("#chat");
-
-            $chat.append($li.append($div));
+            let d = new Date();
+            let $time = $("<span/>").append(d.getHours() + ":" + d.getMinutes());
+            $chat.append($li.append($time, $div));
             $("#un-chat").scrollTop(999999999)
             $txtMessage.val('');
         },

@@ -13,7 +13,7 @@ public class MailSendHelper {
         this.javaMailSender = javaMailSender;
     }
 
-    public void send(User user){
+    public void sendVerificationToken(User user){
 
         String text = String.format("Hi %s! Welcome to Book Barter!\n Your activation link http://localhost:8080/verification?v=%s",
                 user.getUsername(),
@@ -23,6 +23,17 @@ public class MailSendHelper {
         message.setTo(user.getEmail());
 
         message.setSubject("Book Barter activation link");
+        message.setText(text);
+        javaMailSender.send(message);
+    }
+
+    public void sendTransferNotification(String email, String user, String book){
+
+        String text = String.format("User \"%s\" agreed to change the book \"%s\"",
+                user,
+                book);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
         message.setText(text);
         javaMailSender.send(message);
     }

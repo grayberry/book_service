@@ -52,4 +52,15 @@ public class MessageServiceImpl implements MessageService {
         return messagesRepository.findAllByDialog(dialog);
     }
 
+    @Override
+    public List<Message> findAllByDialogAndIsRead(Dialog dialog, Boolean isRead) {
+        return messagesRepository.getAllByDialogAndIsRead(dialog, isRead);
+    }
+
+
+    @Override
+    public void saveAll(List<Message> messages) {
+        messagesRepository.saveAll(messages);
+    }
+
 }

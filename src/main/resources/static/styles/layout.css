@@ -443,12 +443,14 @@ table a, #comments a{background-color:inherit;}
 .notify{
 	width: 10%;
 	height: 70px;
+	min-width: 130px;
 	overflow: hidden;
 	position: fixed;
 	bottom: 10px;
 	left: 10px;
-	border: 1px solid green;
+	border: 2px solid black;
 	background: white;
+	border-radius: 10px;
 }
 
 /*---notify*/

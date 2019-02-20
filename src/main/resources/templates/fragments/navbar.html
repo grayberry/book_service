@@ -6,8 +6,8 @@
       <li><a th:href="@{/books}">BOOKS</a></li>
       <div sec:authorize="isAuthenticated()">
       <li><a th:href="@{/user/mypage}">MY PAGE</a></li>
-      <li><a th:href="@{/dialogs}">DIALOGS</a></li>
-      <li><a th:href="@{/transfers}">TRANSFERS</a></li>
+      <li id="dlnotify"><a th:href="@{/dialogs}">DIALOGS</a></li>
+      <li id="trnotify"><a th:href="@{/transfers}">TRANSFERS</a></li>
       <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin}">ADMIN</a></li>
       </div>
       <li style="float: right"><a style="border-width: 0 1px 0 1px" th:href="@{/contact}">CONTACT US</a></li>

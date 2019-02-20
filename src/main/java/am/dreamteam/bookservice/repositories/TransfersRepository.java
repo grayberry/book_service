@@ -11,4 +11,5 @@ public interface TransfersRepository extends JpaRepository<Transfer, Integer> {
     Transfer findByUserFromAndUserToAndUserBooksAndDone(User userFrom, User userTo, UserBooks userBooks, Boolean done);
     List<Transfer> findAllByUserToAndUserBooksAndDone(User userTo, UserBooks userBooks, Boolean done);
     List<Transfer> findAllByUserFromAndUserToAndDone(User userFrom, User userTo, Boolean done);
+    List<Transfer> findAllByUserToAndDone(User userTo, Boolean done);
 }

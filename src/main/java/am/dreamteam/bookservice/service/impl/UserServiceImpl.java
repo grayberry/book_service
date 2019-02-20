@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         user.setActivationCode(UUID.randomUUID().toString());
         save(user);
-        mailSendHelper.send(user);
+        mailSendHelper.sendVerificationToken(user);
         return 1;
     }
 
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         if (user.getActivationCode() == null) {
             return 0;
         }else {
-            mailSendHelper.send(user);
+            mailSendHelper.sendVerificationToken(user);
             return 1;
         }
 

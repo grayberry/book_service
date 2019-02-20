@@ -9,6 +9,7 @@ import am.dreamteam.bookservice.repositories.TransfersRepository;
 import am.dreamteam.bookservice.repositories.UsersBooksRepository;
 import am.dreamteam.bookservice.repositories.UsersRepository;
 import am.dreamteam.bookservice.service.TransferService;
+import am.dreamteam.bookservice.util.MailSendHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,15 +21,18 @@ public class TransferServiceImpl implements TransferService {
     private UsersRepository usersRepository;
     private UsersBooksRepository usersBooksRepository;
     private DialogsRepository dialogsRepository;
+    private MailSendHelper mailSendHelper;
 
     public TransferServiceImpl(TransfersRepository transfersRepository,
                                UsersRepository usersRepository,
                                UsersBooksRepository usersBooksRepository,
-                               DialogsRepository dialogsRepository) {
+                               DialogsRepository dialogsRepository,
+                               MailSendHelper mailSendHelper) {
         this.transfersRepository = transfersRepository;
         this.usersRepository = usersRepository;
         this.usersBooksRepository = usersBooksRepository;
         this.dialogsRepository = dialogsRepository;
+        this.mailSendHelper = mailSendHelper;
     }
 
     @Override
@@ -97,6 +101,15 @@ public class TransferServiceImpl implements TransferService {
         if(dialogsRepository.findByUserFromAndUserTo(userF, userT)==null){
             newDialog(userF, userT);
         }
+        mailSendHelper.sendTransferNotification(userT.getEmail(), userFrom, bookF.getBook().getTitle());
+    }
+
+    @Override
+    public List<Transfer> findAllByUserToAndDone(String userTo, Boolean done) {
+        User user = usersRepository.findUserByUsername(userTo);
+
+        return transfersRepository.findAllByUserToAndDone(user, done);
+
     }
 
     private void newDialog(User userFrom, User userTo){

@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface MessagesRepository extends JpaRepository<Message, Long> {
     List<Message> findAllByDialog(Dialog dialog);
+    List<Message> getAllByDialogAndIsRead(Dialog dialog, Boolean isRead);
 
 }

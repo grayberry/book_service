@@ -10,4 +10,5 @@ public interface TransferService {
     boolean findTransfer(String userFrom, String userTo, Integer bookId);
     void cancelTransfer(String userFrom, String userTo, Integer bookId);
     void transferBooks(String userFrom, String userTo, Integer bookFrom, Integer bookTo);
+    List<Transfer> findAllByUserToAndDone(String userTo, Boolean done);
 }

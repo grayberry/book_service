@@ -9,7 +9,9 @@ stompClient.connect({}, function (frame) {
             let $li = $('<li/>');
             let $div = $('<div/>');
             $div.text(message.content);
-            $chat.append($li.append($div));
+            let d = new Date();
+            let $time = $("<span/>").append(d.getHours() + ":" + d.getMinutes());
+            $chat.append($li.append($div, $time));
             $("#un-chat").scrollTop(999999999)
         } else{
             notifymessage(message)
@@ -41,6 +43,7 @@ function notifymessage(data){
     let $img = $("<img/>").attr("src",  "http://stellae.usc.es/red/file/download/152679")
     $("body").append($div.append($span, $text, $img));
     $div.hide(15000);
+    $("#dlnotify").css("background", "green")
     $(".notify span").on("click", function () {
         let $t = $(this);
         $t.parent().detach();
@@ -50,13 +53,14 @@ function notifymessage(data){
 }
 
 function notifytransfer(data) {
-    let $div = $("<div/>").addClass("notify")
+    let $div = $("<div/>").addClass("notify");
     let $text = $("<p/>")
-    let $span = $("<span/>").addClass("cancel").append("X")
+    let $span = $("<span/>").addClass("cancel").append("X");
     $text.append('<a href="'+ window.location.origin + "/transfers?u=" + data.user + '">' + data.user + '<a/>');
-    let $img = $("<img/>").attr("src", data.content.book.imageRef)
+    let $img = $("<img/>").attr("src", data.content.book.imageRef);
     $("body").append($div.append($span, $text, $img));
     $div.hide(20000);
+    $("#trnotify").css("background", "#8080f1");
     $(".notify span").on("click", function () {
         let $t = $(this);
         $t.parent().detach();

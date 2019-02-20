@@ -46,9 +46,11 @@ public class MessageController {
             model.addAttribute("print", (hisDialog = dialogService.findByUserFromAndUserTo(userTo, principal.getName()))!=null);
             List<Message> h1 = messageService.findAllMessageByDialog(hisDialog);
             List<Message> m1 = messageService.findAllMessageByDialog(myDialog);
+            h1.stream().filter(x-> !x.getRead()).forEach(x->x.setRead(true));
             m1.addAll(h1);
             Collections.sort(m1);
             model.addAttribute("messages", m1);
+            messageService.saveAll(h1);
         }
         model.addAttribute("page", "Dialogs");
         model.addAttribute("dialogs",dialogService.findAllByUserTo(principal.getName()));
