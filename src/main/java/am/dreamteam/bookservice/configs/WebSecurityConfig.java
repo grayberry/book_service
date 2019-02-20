@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().ignoringAntMatchers("/dialogs/**", "/transfers/**","/admin/**", "/user/mypage/edit")
+                .csrf().ignoringAntMatchers("/dialogs/**", "/transfers/**","/admin/**", "/user/mypage/edit", "/resend")
                 .and()
                 .formLogin()
                 .loginPage("/login")

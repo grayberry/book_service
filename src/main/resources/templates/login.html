@@ -11,7 +11,7 @@
     <div class="login-page">
       <div class="form">
         <div th:if="${param.error}">
-          Invalid username or password.
+          <p id="err" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
         </div>
         <b th:text="${message}" ></b>
         <form class="login-form" method="post" th:action="@{/login}">
@@ -22,5 +22,6 @@
         </form>
       </div>
     </div>
+    <script th:src="@{/scripts/resend.js}"></script>
   </body>
 </html>

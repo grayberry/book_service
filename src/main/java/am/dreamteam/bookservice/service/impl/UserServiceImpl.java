@@ -98,6 +98,22 @@ public class UserServiceImpl implements UserService {
         return usersRepository.findUserByActivationCode(code);
     }
 
+    @Override
+    public int resend(String email) {
+        User user = usersRepository.findUserByEmail(email);
+        if (user == null) {
+            return -1;
+        }
+        if (user.getActivationCode() == null) {
+            return 0;
+        }else {
+            mailSendHelper.send(user);
+            return 1;
+        }
+
+
+    }
+
 /*    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(findByEmail(username)!=null){

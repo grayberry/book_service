@@ -3,7 +3,7 @@ package am.dreamteam.bookservice.entities.messages;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "messages")
@@ -14,6 +14,7 @@ public class Message implements Comparable<Message>{
     @Column(name = "content")
     private String content;
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createAt;
     @Column(name = "is_read")
@@ -68,7 +69,7 @@ public class Message implements Comparable<Message>{
 
     @Override
     public int compareTo(Message message) {
-        return getId().compareTo(message.getId());
+        return getCreateAt().compareTo(message.getCreateAt());
     }
 
     @Override

@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS messages(
     id BIGSERIAL PRIMARY KEY,
     dialog_id BIGINT REFERENCES dialogs(id) ON UPDATE CASCADE ON DELETE CASCADE,
     content TEXT,
-    create_at DATE NOT NULL DEFAULT now(),
+    create_at TIMESTAMP NOT NULL DEFAULT now(),
     is_read BOOLEAN
 );

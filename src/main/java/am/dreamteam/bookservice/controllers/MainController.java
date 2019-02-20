@@ -88,6 +88,20 @@ public class MainController {
         return "login";
     }
 
+    @PostMapping("/resend")
+    public String resend(@RequestParam String email, Model model){
+        int i = userService.resend(email);
+        if(i==-1){
+            model.addAttribute("message", "Email - \"" + email + "\" is not correct");
+        }
+        if(i==0){
+            model.addAttribute("message", "Admin blocked Your account");
+        }
+        if(i==1){
+            model.addAttribute("message", "We sent You a verification key again. \nCheck Your email: " + email);
+        }
+        return "login";
+    }
 
     @GetMapping("/admin")
     public String admin() {
