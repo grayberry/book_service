@@ -21,13 +21,13 @@ CREATE TABLE IF NOT EXISTS books(
 );
 
 CREATE TABLE IF NOT EXISTS book_authors (
-                    book_id INTEGER REFERENCES books(id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                    author_id INTEGER REFERENCES authors(id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                    book_id BIGINT REFERENCES books(id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                    author_id BIGINT REFERENCES authors(id) ON UPDATE CASCADE ON DELETE CASCADE ,
                     PRIMARY KEY (book_id, author_id)
 );
 
 CREATE TABLE IF NOT EXISTS book_categories (
-                    book_id INTEGER REFERENCES books(id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                    category_id INTEGER REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE,
+                    book_id BIGINT REFERENCES books(id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                    category_id BIGINT REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE,
                     PRIMARY KEY(book_id, category_id)
 );

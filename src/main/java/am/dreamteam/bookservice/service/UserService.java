@@ -15,6 +15,6 @@ public interface UserService  {
     User findByEmail(String email);
     User save(User user);
     User findUserByVerificationCode(String code);
-    void disableUser(Integer id);
-    User enableUser(User user);
+    User disableUser(Integer id);
+    User enableUser(Integer id);
 }

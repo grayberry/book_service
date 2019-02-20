@@ -74,6 +74,18 @@ public class UserBooks {
         isRemoved = removed;
     }
 
+    public Boolean getRemoved() {
+        return isRemoved;
+    }
+
+    public Boolean getForTransfer() {
+        return forTransfer;
+    }
+
+    public void setForTransfer(Boolean forTransfer) {
+        this.forTransfer = forTransfer;
+    }
+
     @Override
     public String toString() {
         return "{" +

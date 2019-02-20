@@ -6,8 +6,6 @@ import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.repositories.UsersRepository;
 import am.dreamteam.bookservice.service.UserService;
 import am.dreamteam.bookservice.util.MailSendHelper;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,18 +56,21 @@ public class UserServiceImpl implements UserService {
         return 1;
     }
 
-    public void disableUser(Integer id) {
+    public User disableUser(Integer id) {
         User user = findUserById(id);
         user.setActive(false);
         save(user);
+
+        return user;
     }
 
     @Override
-    public User enableUser(User user) {
-        User toEnable = findByUsername(user.getUsername());
-        toEnable.setActive(true);
-        usersRepository.save(toEnable);
-        return toEnable;
+    public User enableUser(Integer id) {
+        User user = findUserById(id);
+        user.setActive(true);
+        save(user);
+
+        return user;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user){
-       return usersRepository.save(user);
+        return usersRepository.save(user);
     }
 
     @Override

@@ -4,7 +4,7 @@ app.factory('Users', function ($resource) {
     return $resource('http://localhost:8080/admin/users/:id', {id: '@uid'},{
         update: {
             method: 'PUT'
-        }
+        },
     });
 });
 
@@ -14,10 +14,6 @@ app.factory('User', function($resource) {
             method: 'PUT'
         },
 
-        enable: {
-            method: 'PUT',
-            url: 'http://localhost:8080/admin/users/enable'
-        }
     });
 });
 
@@ -41,27 +37,20 @@ app.controller('UsersController', function($scope, Users) {
     $scope.users = Users.query();
     $scope.user = {};
 
-    // $scope.update = function() {
-    //     $scope.users = Users.query();
-    // };
+    $scope.update = function() {
+        $scope.users = Users.query();
+    };
 
     $scope.edit = function () {
         console.log("edit");
         Users.update($scope.user, function () {
-             $scope.users = Users.query();
+            $scope.users = Users.query();
         })
     };
 
     $scope.delete = function(user) {
         user.$delete({id: user.id}, function () {
             console.log('deleting');
-            $scope.users = Users.query();
-        })
-    };
-
-    $scope.enable = function() {
-        console.log("enabling");
-        Users.enable($scope.user, function () {
             $scope.users = Users.query();
         })
     };
