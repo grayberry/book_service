@@ -9,6 +9,10 @@ $("#editbtn").on("click", function () {
     editWindow();
 
 });
+
+$("#addphoto").on("click", function () {
+    addPhotoWindow();
+})
 function editWindow() {
     $div = $("<div/>").addClass("edit_div");
     $altername = $("<input/>").attr({
@@ -37,6 +41,26 @@ function editWindow() {
     $div.append($altername, $pass, $confirmPass, $save, $cancel);
     $("body").append($div);
     enab()
+}
+
+function addPhotoWindow() {
+    let $div = $("<div/>").addClass("edit_div");
+    let $form = $("<form/>").attr({
+        method:"post",
+        action: "/user/mypage/img"
+    });
+    let $img = $("<input/>").attr({
+        type: "file",
+        name: "photo"
+    });
+    let $upload = $("<input/>").attr({
+        type: "submit",
+        value: "upload"
+    });
+
+    $form.append($img, $upload);
+    $div.append($form);
+    $("body").append($div);
 }
 
 function isAlternameValid(){

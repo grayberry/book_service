@@ -6,10 +6,8 @@ import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 
@@ -46,4 +44,13 @@ public class UserRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/img")
+    public ResponseEntity<?> img(@AuthenticationPrincipal Principal principal,
+                                 @RequestParam("photo") MultipartFile photo){
+        if(principal==null){
+            return ResponseEntity.badRequest().build();
+        }
+        System.out.println(photo);
+        return ResponseEntity.ok().build();
+        }
 }

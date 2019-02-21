@@ -45,6 +45,7 @@
                 <p th:if="${user.altername!=null}"><b class="heading">Nick</b>: <b>[[${user.altername}]]</b> </p>
                 <div th:if="${main}">
                   <input id="editbtn" type="submit" value="Edit" >
+                   <input id="addphoto" type="submit" value="Add photo">
                   <div th:replace="fragments/adbt :: adbt" >
                   </div>
                 </div>
