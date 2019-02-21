@@ -564,15 +564,22 @@ table a, #comments a{background-color:inherit;}
 /*----------user page edit ----------*/
 
 .edit_div{
-	max-width: 50%;
+	max-width: 30%;
 	position: fixed;
 	top: 20%;
-	left: 30%;
+	left: 35%;
 	background: white;
 	width: 40%;
-	min-height: 300px;
+	min-height: 250px;
 	border-radius: 5px;
-	border: 1px solid grey;
+	border: 2px solid grey;
+}
+
+.edit_img{
+	position: absolute;
+	width: 150%;
+	top: 20%;
+	left: 10%;
 }
 
 .edit_div input{

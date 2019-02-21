@@ -40,7 +40,7 @@
             <!--/*@thymesVar id="user" type="am.dreamteam.bookservice.entities.users.User"*/-->
             <h1 th:text="${user.getUsername()}"></h1>
             <div class="userProfile">
-              <img th:src="${user.photo}">
+              <img th:src=" '/img/' + ${user.photo}">
               <div class="infotitles">
                 <p th:if="${user.altername!=null}"><b class="heading">Nick</b>: <b>[[${user.altername}]]</b> </p>
                 <div th:if="${main}">

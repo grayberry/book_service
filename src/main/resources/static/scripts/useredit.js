@@ -47,20 +47,49 @@ function addPhotoWindow() {
     let $div = $("<div/>").addClass("edit_div");
     let $form = $("<form/>").attr({
         method:"post",
-        action: "/user/mypage/img"
-    });
+        action: "/user/mypage/img",
+        enctype: "multipart/form-data"
+    }).addClass("edit_img");
     let $img = $("<input/>").attr({
         type: "file",
-        name: "photo"
+        name: "file",
+        id: "photo"
     });
     let $upload = $("<input/>").attr({
         type: "submit",
-        value: "upload"
+        value: "Upload",
+        id: "upload"
     });
+    $cancel = $("<span/>").addClass("cancel").append("X")
 
     $form.append($img, $upload);
-    $div.append($form);
+    $div.append($form, $cancel);
     $("body").append($div);
+    checkImage()
+}
+
+function checkImage() {
+    let $photo = $("#photo");
+    let $message = $("<p/>").attr({
+        id:"pmess",
+        style: "color:red"
+    })
+
+    $photo.on("change", function () {
+        $message.empty();
+        let $t = $(this);
+        if($t[0].files[0].size>131071){
+            $t.parent().append($message.append("image size is too large. max size: 128kb"));
+            $("#upload").prop("disabled", true);
+            $t.val("")
+        }else {
+            $("#upload").prop("disabled", false);
+        }
+    });
+
+    $cancel.on("click", function () {
+        $photo.parent().parent().detach();
+    })
 }
 
 function isAlternameValid(){

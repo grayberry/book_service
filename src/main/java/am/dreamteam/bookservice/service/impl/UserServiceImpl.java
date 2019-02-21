@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setSex(request.getSex());
-        user.setPhoto("/images/avatars/" + request.getSex() + ".png");
+        user.setPhoto("avatars/" + request.getSex() + ".png");
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         user.setActive(false);
         user.setActivationCode(UUID.randomUUID().toString());
