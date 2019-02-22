@@ -18,5 +18,6 @@ public interface UserBooksService {
     List<UserBooks> findAllUserBooksByUsername(String username);
     List<UserBooks> searchByAuthor(String term);
     List<UserBooks> searchByTitle(String term);
+    List<UserBooks> getRand();
 
 }

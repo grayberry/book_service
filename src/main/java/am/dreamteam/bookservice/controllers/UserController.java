@@ -50,6 +50,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("books", userBooksService.findAllUserBooksByUserId(user.getId(), page));
         model.addAttribute("main", true);
+        model.addAttribute("randomBooks", userBooksService.getRand());
         return "userpage";
     }
 
@@ -69,7 +70,7 @@ public class UserController {
         }
         model.addAttribute("user", user);
         model.addAttribute("books", userBooksService.findAllUserBooksByUserId(user.getId(),page));
-
+        model.addAttribute("randomBooks", userBooksService.getRand());
         return "userpage";
     }
 }

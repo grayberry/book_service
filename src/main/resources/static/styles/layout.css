@@ -54,7 +54,7 @@
 
 /* Elements */
 .elements li:last-child{margin-bottom:0;}/* Used for mobile devices when elements stack */
-.elements article{display:inline-block; width:100%; max-width:320px; height:100%;}
+.elements article{display:inline-block; width:100%; max-width:320px; height:100%; box-shadow: 5px 5px}
 .elements figure{display:block; position:relative;}
 .elements figure figcaption{width:50%; height: 100%; visibility:hidden; opacity:0; position:absolute; bottom:0; right:0; padding:5px 10px;}
 .elements article:hover figcaption{visibility:visible; opacity:1;}
@@ -171,7 +171,6 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 .sidebar nav{display:block; width:100%;}
 .sidebar nav li{margin:0 0 3px 0; padding:0;}
 .sidebar nav a{display:block; position:relative; margin:0; padding:5px 10px 5px 15px; text-decoration:none; border:solid; border-width:0 0 1px 0;}
-.sidebar nav a::after{top:9px; left:5px; content:"\f101";}
 .sidebar nav ul ul a{padding-left:35px;}
 .sidebar nav ul ul a::after{left:25px;}
 .sidebar nav ul ul ul a{padding-left:55px;}
@@ -406,6 +405,15 @@ table a, #comments a{background-color:inherit;}
 
 /*My*/
 
+
+.book_ajax{
+	text-align: center;
+	font-weight: bolder;
+	color: white;
+}
+
+/*---*/
+
 .d_u{
 	width: 100%;
 	overflow: hidden;
@@ -424,11 +432,10 @@ table a, #comments a{background-color:inherit;}
 .d_p {
 	position: absolute;
 	top: 60%;
-	width: 200px;
 	display: none;
 	font-weight: bolder;
-	background: #a19b9b94;
-	text-shadow: 2px 2px gray;
+	background: #82b440;
+	text-shadow: 2px 2px grey;
 	color: white;
 	text-overflow: ellipsis;
 	word-wrap: break-word;
@@ -459,6 +466,7 @@ table a, #comments a{background-color:inherit;}
 	width: 150px !important;
 	height: 200px !important;
 	border: 1px solid !important;
+	box-shadow: 5px 5px;
 }
 .notify span {
 	color: red;
@@ -519,6 +527,10 @@ table a, #comments a{background-color:inherit;}
 	width: 150px;
 	height: 150px;
 	float: left;
+	border: 2px solid;
+	border-radius: 15px;
+	box-shadow: 3px 5px #88888873;
+
 }
 
 /*add book*/
@@ -549,6 +561,8 @@ table a, #comments a{background-color:inherit;}
 .pic img{
 	width: 200px;
 	height: 300px;
+	border: 2px solid;
+	border-radius: 5px;
 }
 
 .cancel{
@@ -557,8 +571,24 @@ table a, #comments a{background-color:inherit;}
 	font-weight: bolder;
 }
 
+
 .infotitles{
 	width: 66%;
+
+}
+.infotitles_usr{
+	width: 66%;
+	margin: 0 0 0 25%;
+}
+
+.infotitles_usr input{
+    display: inline-block;
+    background-color: #82b440;
+    font-size: 20px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid;
+    box-shadow: 2px 2px #d8d8d8;
 }
 
 /*----------user page edit ----------*/
@@ -604,4 +634,18 @@ table a, #comments a{background-color:inherit;}
 	position: absolute;
 	top: 25px;
 	right: 25px;
+}
+
+.sidebar_ul{
+	display: inline-block;
+}
+.sidebar_ul li{
+	display: inline-block;
+	width: 45%;
+}
+.sidebar_ul img{
+	width: 70px;
+	height: 100px;
+	cursor: pointer;
+	border: 1px solid;
 }

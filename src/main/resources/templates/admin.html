@@ -60,7 +60,7 @@
               <td>{{user.active}}</td>
               <td>
                 <a type="button" class="btn btn-info" ng-click="update(user)" data-toggle="modal" data-target="#edit-modal">Edit</a>
-                <a type="button" ng-show="user.active" class="btn btn-danger" ng-click="delete(user)">Delete</a>
+                <a type="button" ng-show="user.active" class="btn btn-danger" ng-click="delete(user)">Disable</a>
                 <a type="button" ng-show="!user.active" class="btn btn-success" ng-click="delete(user)">Enable</a>
               </td>
             </tr>

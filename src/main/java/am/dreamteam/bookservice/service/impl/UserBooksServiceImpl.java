@@ -8,16 +8,12 @@ import am.dreamteam.bookservice.repositories.UsersBooksRepository;
 import am.dreamteam.bookservice.repositories.UsersRepository;
 import am.dreamteam.bookservice.service.UserBooksService;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserBooksServiceImpl implements UserBooksService {
@@ -72,6 +68,11 @@ public class UserBooksServiceImpl implements UserBooksService {
     @Override
     public List<UserBooks> searchByTitle(String term) {
         return usersBooksRepository.searchByTitle(term);
+    }
+
+    @Override
+    public List<UserBooks> getRand() {
+        return usersBooksRepository.getRandom();
     }
 
     @Override

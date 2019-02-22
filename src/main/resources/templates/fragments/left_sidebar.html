@@ -2,28 +2,12 @@
 <div th:fragment="left_sidebar">
     <div class="sidebar one_quarter first">
       <!-- ################################################################################################ -->
-     <h6>Lorem ipsum dolor</h6>
+     <h6>Random Books</h6>
            <nav class="sdb_holder">
-             <ul>
-               <li><a href="#">Navigation - Level 1</a></li>
-               <li><a href="#">Navigation - Level 1</a>
-                 <ul>
-                   <li><a href="#">Navigation - Level 2</a></li>
-                   <li><a href="#">Navigation - Level 2</a></li>
-                 </ul>
-               </li>
-               <li><a href="#">Navigation - Level 1</a>
-                 <ul>
-                   <li><a href="#">Navigation - Level 2</a></li>
-                   <li><a href="#">Navigation - Level 2</a>
-                     <ul>
-                       <li><a href="#">Navigation - Level 3</a></li>
-                       <li><a href="#">Navigation - Level 3</a></li>
-                     </ul>
-                   </li>
-                 </ul>
-               </li>
-               <li><a href="#">Navigation - Level 1</a></li>
+             <ul class="sidebar_ul">
+                <li th:each="book : ${randomBooks}">
+                    <a th:href="'/books?id=' + ${book.id}"> <img th:src="${book.book.imageRef}" th:alt="${book.book.title}"></a>
+                </li>
              </ul>
            </nav>
       <!-- ################################################################################################ -->

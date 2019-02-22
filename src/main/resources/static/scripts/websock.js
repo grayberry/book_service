@@ -5,7 +5,7 @@ stompClient.connect({}, function (frame) {
     stompClient.subscribe("/user/message", function (data) {
         let message = JSON.parse(data.body);
         if(window.location.pathname === "/dialogs"){
-            let $chat = $('ul[name='+ message.user +']');
+            let $chat = $('ul[name='+ message.user.toString() +']');
             let $li = $('<li/>');
             let $div = $('<div/>');
             $div.text(message.content);

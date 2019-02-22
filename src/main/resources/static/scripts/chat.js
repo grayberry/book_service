@@ -71,7 +71,7 @@ function getbooks() {
 
 function bookAppend(data){
     let $ul = $("<ul/>").attr("class", "book_ul");
-    $ul.append($("<h2/>").append("CHOOSE USER BOOK").attr("style", "text-align:center"))
+    $ul.append($("<h2/>").append("CHOOSE USER BOOK").addClass("book_ajax"));
     for(var i = 0; i<data.length; i++){
         let $img = $("<img/>");
         let $p =  $("<p/>").addClass("book_p").append(data[i].book.title);

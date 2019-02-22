@@ -41,14 +41,13 @@
             <h1 th:text="${user.getUsername()}"></h1>
             <div class="userProfile">
               <img th:src=" '/img/' + ${user.photo}">
-              <div class="infotitles">
-                <p th:if="${user.altername!=null}"><b class="heading">Nick</b>: <b>[[${user.altername}]]</b> </p>
+              <div class="infotitles_usr">
                 <div th:if="${main}">
-                  <input id="editbtn" type="submit" value="Edit" >
-                   <input id="addphoto" type="submit" value="Add photo">
-                  <div th:replace="fragments/adbt :: adbt" >
-                  </div>
-                </div>
+                    <input id="editbtn" type="submit" value="Edit" >
+                    <input id="addphoto" type="submit" value="Add photo">
+                    <div th:replace="fragments/adbt :: adbt" ></div>
+                 </div>
+                <p th:if="${user.altername!=null}"><b class="heading">Nick</b>: <b>[[${user.altername}]]</b> </p>
               </div>
             </div>
             <hr>

@@ -36,6 +36,8 @@
               <a th:href="@{/register}">Register</a>
           </div>
           <div sec:authorize="isAuthenticated()">
+         <p class="heading">Welcome, <b th:text="${#authentication.getPrincipal().getUsername()}"></b></p>
+
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
                 </form>

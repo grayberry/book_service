@@ -20,4 +20,7 @@ public interface UsersBooksRepository extends JpaRepository<UserBooks, Integer> 
     @Query("select ba from UserBooks ba inner join ba.book ba_b inner join ba_b.authors a on (LOWER(a.fullName) like %:term%)")
     List<UserBooks> searchByAuthor(@Param("term") String term);
 
+    @Query(value = "select * from users_books u order by RANDOM() limit 10", nativeQuery = true)
+    List<UserBooks> getRandom();
+
 }

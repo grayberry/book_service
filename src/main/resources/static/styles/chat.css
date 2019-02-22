@@ -86,6 +86,11 @@ body {
     line-height: 1.8em;
 }
 
+.book_ul li {
+    border: 1px solid;
+    box-shadow: 3px 5px;
+}
+
 .book_ul li:hover .book_p{
     display: block;
 }
@@ -97,6 +102,12 @@ body {
     top: 10px;
     right: 10px;
     cursor: pointer;
+}
+
+.message_input{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
 }
 
 /*------------*/

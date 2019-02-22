@@ -38,6 +38,7 @@ public class BookController {
         }
         if(id!=null){
             model.addAttribute("book", userBooksService.findUserBookById(id));
+            model.addAttribute("randomBooks", userBooksService.getRand());
             return "single-book";
         }
         Page<UserBooks> books = userBooksService.findAllUsersBooks(page);
