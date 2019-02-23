@@ -5,6 +5,7 @@
     <title>BookBarter</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/styles/layout.css}" rel="stylesheet">
     <link th:href="@{/styles/owl.carousel.css}" rel="stylesheet">
     <link th:href="@{/styles/owl.theme.css}" rel="stylesheet">
@@ -76,8 +77,10 @@
         <div class="clear"></div>
       </div>
     </div>
-    <!-- <div th:replace="fragments/partners :: partners">
-    </div> -->
+    <div class="row3">
+          <div th:replace="fragments/partners :: partners">
+          </div>
+        </div>
     <div th:replace="fragments/footer :: footer">
     </div>
     <!-- ################################################################################################ -->
