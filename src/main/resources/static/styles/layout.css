@@ -450,7 +450,7 @@ table a, #comments a{background-color:inherit;}
 .notify{
 	width: 10%;
 	height: 70px;
-	min-width: 130px;
+	min-width: 150px;
 	overflow: hidden;
 	position: fixed;
 	bottom: 10px;

@@ -1,6 +1,6 @@
 package am.dreamteam.bookservice.entities.users;
 
-import am.dreamteam.bookservice.domain.Role;
+import am.dreamteam.bookservice.dto.Role;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

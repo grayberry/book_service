@@ -18,7 +18,7 @@
       <main class="hoc container clear">
         <h2 th:text="${page}"></h2>
         <!-- main body -->
-        <div id="userTo" th:value="${username}" th:text="${username}"></div>
+        <div id="userTo" th:value="${username}"><a th:href="@{'/user/' + ${username}}">[[${username}]]</a></div>
         <div class="content">
           <div class="dialogs_div">
             <!--/*@thymesVar id="dialogs" type="am.dreamteam.bookservice.entities.messages.Dialog"*/-->

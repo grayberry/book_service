@@ -1,4 +1,4 @@
-package am.dreamteam.bookservice.domain;
+package am.dreamteam.bookservice.dto;
 
 public class RegisterRequest {
 

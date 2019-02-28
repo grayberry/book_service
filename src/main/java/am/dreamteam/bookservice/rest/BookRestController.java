@@ -39,7 +39,6 @@ public class BookRestController {
                                                 "\"book\" : %s }",
                                         x.getId().toString(),
                                         x.getBook().toString())
-
                         )
                 ).distinct().collect(Collectors.toList()),
                 HttpStatus.OK);

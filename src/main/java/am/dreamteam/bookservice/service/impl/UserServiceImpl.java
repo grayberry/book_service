@@ -1,7 +1,7 @@
 package am.dreamteam.bookservice.service.impl;
 
-import am.dreamteam.bookservice.domain.RegisterRequest;
-import am.dreamteam.bookservice.domain.Role;
+import am.dreamteam.bookservice.dto.RegisterRequest;
+import am.dreamteam.bookservice.dto.Role;
 import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.repositories.UsersRepository;
 import am.dreamteam.bookservice.service.UserService;

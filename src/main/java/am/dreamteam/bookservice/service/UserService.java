@@ -1,9 +1,7 @@
 package am.dreamteam.bookservice.service;
 
-import am.dreamteam.bookservice.domain.RegisterRequest;
+import am.dreamteam.bookservice.dto.RegisterRequest;
 import am.dreamteam.bookservice.entities.users.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 

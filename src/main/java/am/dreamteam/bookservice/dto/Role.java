@@ -1,4 +1,4 @@
-package am.dreamteam.bookservice.domain;
+package am.dreamteam.bookservice.dto;
 
 public enum Role {
     ROLE_USER,

@@ -1,6 +1,6 @@
 package am.dreamteam.bookservice.controllers;
 
-import am.dreamteam.bookservice.domain.RegisterRequest;
+import am.dreamteam.bookservice.dto.RegisterRequest;
 import am.dreamteam.bookservice.entities.users.User;
 import am.dreamteam.bookservice.entities.users.UserBooks;
 import am.dreamteam.bookservice.service.UserBooksService;
@@ -9,15 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
